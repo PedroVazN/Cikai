@@ -77,12 +77,22 @@ const connectDB = async () => {
   }
 }
 
-// Conectar ao MongoDB
-connectDB()
+// Conectar ao MongoDB (não bloquear inicialização)
+// No Vercel, a conexão será feita na primeira requisição
+if (process.env.VERCEL) {
+  // No Vercel, conectar de forma assíncrona sem bloquear
+  connectDB().catch(err => {
+    console.error('Erro ao conectar MongoDB (não bloqueante):', err.message)
+  })
+} else {
+  // Em desenvolvimento, conectar normalmente
+  connectDB()
+}
 
 // Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
   try {
+    // Se não estiver conectado, tentar conectar
     if (!isConnected && mongoose.connection.readyState !== 1) {
       console.log('Tentando conectar ao MongoDB...')
       await connectDB()
@@ -91,31 +101,47 @@ app.use(async (req, res, next) => {
     // Verificar se está conectado
     if (mongoose.connection.readyState !== 1) {
       console.error('MongoDB não está conectado. Estado:', mongoose.connection.readyState)
+      console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
+      
       return res.status(500).json({ 
         error: 'Erro de conexão com o banco de dados',
         message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
-        connectionState: mongoose.connection.readyState
+        connectionState: mongoose.connection.readyState,
+        hasMongoUri: !!process.env.MONGODB_URI
       })
     }
     
     next()
   } catch (error) {
     console.error('Erro no middleware de conexão:', error)
+    console.error('Stack:', error.stack)
+    
     return res.status(500).json({ 
       error: 'Erro de conexão com o banco de dados',
       message: error.message,
-      mongoUri: process.env.MONGODB_URI ? 'Definida' : 'NÃO DEFINIDA'
+      mongoUri: process.env.MONGODB_URI ? 'Definida' : 'NÃO DEFINIDA',
+      errorType: error.name
     })
   }
 })
 
-// Middleware de tratamento de erros global
+// Middleware de tratamento de erros global (deve ser o último)
 app.use((error, req, res, next) => {
   console.error('Erro não tratado:', error)
-  res.status(500).json({
-    error: 'Erro interno do servidor',
-    message: error.message,
-    ...(process.env.NODE_ENV === 'development' && { stack: error.stack })
+  if (!res.headersSent) {
+    res.status(500).json({
+      error: 'Erro interno do servidor',
+      message: error.message,
+      ...(process.env.NODE_ENV === 'development' && { stack: error.stack })
+    })
+  }
+})
+
+// Handler de erro para rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Rota não encontrada',
+    path: req.path
   })
 })
 
