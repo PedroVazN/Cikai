@@ -26,7 +26,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Servir arquivos estáticos de uploads (se usar upload local)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+// No Vercel, uploads devem ser feitos via Cloudinary
+if (!process.env.VERCEL) {
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+}
 
 // Rotas
 app.use('/api/empreendimentos', empreendimentosRoutes)
@@ -79,17 +82,41 @@ connectDB()
 
 // Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
-  if (!isConnected && mongoose.connection.readyState !== 1) {
-    try {
+  try {
+    if (!isConnected && mongoose.connection.readyState !== 1) {
+      console.log('Tentando conectar ao MongoDB...')
       await connectDB()
-    } catch (error) {
+    }
+    
+    // Verificar se está conectado
+    if (mongoose.connection.readyState !== 1) {
+      console.error('MongoDB não está conectado. Estado:', mongoose.connection.readyState)
       return res.status(500).json({ 
         error: 'Erro de conexão com o banco de dados',
-        message: process.env.NODE_ENV === 'production' ? 'Erro interno do servidor' : error.message 
+        message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
+        connectionState: mongoose.connection.readyState
       })
     }
+    
+    next()
+  } catch (error) {
+    console.error('Erro no middleware de conexão:', error)
+    return res.status(500).json({ 
+      error: 'Erro de conexão com o banco de dados',
+      message: error.message,
+      mongoUri: process.env.MONGODB_URI ? 'Definida' : 'NÃO DEFINIDA'
+    })
   }
-  next()
+})
+
+// Middleware de tratamento de erros global
+app.use((error, req, res, next) => {
+  console.error('Erro não tratado:', error)
+  res.status(500).json({
+    error: 'Erro interno do servidor',
+    message: error.message,
+    ...(process.env.NODE_ENV === 'development' && { stack: error.stack })
+  })
 })
 
 // Apenas iniciar servidor se não estiver no Vercel

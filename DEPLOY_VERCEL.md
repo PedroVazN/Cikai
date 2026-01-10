@@ -22,7 +22,19 @@ Este guia explica como fazer o deploy do frontend e backend no Vercel.
    - **Install Command**: `npm install`
    - **Entry Point**: `api/index.js` (ou deixe vazio, o vercel.json já configura)
 
-### 1.2. Variáveis de Ambiente do Backend
+### 1.2. Configurar MongoDB Atlas
+
+**⚠️ IMPORTANTE**: Antes de fazer o deploy, configure o Network Access no MongoDB Atlas:
+
+1. Acesse [MongoDB Atlas](https://cloud.mongodb.com)
+2. Vá em **Security** → **Network Access**
+3. Clique em **"Add IP Address"**
+4. Selecione **"Allow Access from Anywhere"** (adiciona `0.0.0.0/0`)
+5. Clique em **"Confirm"**
+
+📖 **Guia completo**: Veja `MONGODB_ATLAS_IPS.md`
+
+### 1.3. Variáveis de Ambiente do Backend
 
 Adicione estas variáveis de ambiente no Vercel:
 
@@ -44,7 +56,7 @@ ADMIN_PASSWORD=sua_senha_segura
 ADMIN_NOME=Célia Ikai
 ```
 
-### 1.3. Deploy
+### 1.4. Deploy
 
 1. Clique em **"Deploy"**
 2. Aguarde o deploy finalizar
