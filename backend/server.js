@@ -111,12 +111,30 @@ if (!process.env.VERCEL) {
   connectDB()
 }
 
-// Middleware SIMPLIFICADO - apenas verificar se está conectado
+// Middleware - garantir conexão antes de processar
 app.use(async (req, res, next) => {
   try {
-    if (!isConnected && mongoose.connection.readyState !== 1) {
+    // Se não estiver conectado, conectar e AGUARDAR estar pronto
+    if (!isConnected || mongoose.connection.readyState !== 1) {
       await connectDB()
+      
+      // Aguardar até estar realmente conectado (readyState === 1)
+      let attempts = 0
+      while (mongoose.connection.readyState !== 1 && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+      
+      // Se ainda não conectou, retornar erro
+      if (mongoose.connection.readyState !== 1) {
+        return res.status(500).json({ 
+          error: 'Erro de conexão com o banco de dados',
+          message: 'MongoDB não conectou a tempo. Tente novamente.',
+          state: mongoose.connection.readyState
+        })
+      }
     }
+    
     next()
   } catch (error) {
     console.error('❌ Erro de conexão:', error.message)
