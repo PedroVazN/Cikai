@@ -1,7 +1,14 @@
 import axios from 'axios'
 
 // Usar variável de ambiente ou fallback para /api (proxy local)
+// No Vercel, VITE_API_URL deve ser configurada nas variáveis de ambiente
 const API_URL = import.meta.env.VITE_API_URL || '/api'
+
+// Log para debug (apenas em desenvolvimento)
+if (import.meta.env.DEV) {
+  console.log('🔧 API URL configurada:', API_URL)
+  console.log('🔧 VITE_API_URL:', import.meta.env.VITE_API_URL || 'não definida')
+}
 
 const api = axios.create({
   baseURL: API_URL,
