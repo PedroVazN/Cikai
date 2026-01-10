@@ -4,18 +4,23 @@ import axios from 'axios'
 // No Vercel, VITE_API_URL deve ser configurada nas variáveis de ambiente
 let API_URL = import.meta.env.VITE_API_URL
 
-// Se não tiver VITE_API_URL e estiver em produção, usar URL do backend
+// Se não tiver VITE_API_URL, usar fallback baseado no ambiente
 if (!API_URL) {
   if (import.meta.env.PROD) {
-    // Em produção, tentar detectar automaticamente ou usar fallback
-    // Se estiver no Vercel, a variável DEVE estar configurada
-    console.error('❌ VITE_API_URL não está definida em produção!')
-    console.error('⚠️ Configure VITE_API_URL no Vercel antes do deploy')
-    // Fallback: tentar usar o backend conhecido
+    // Em produção no Vercel, SEMPRE usar URL absoluta do backend
+    // Não usar /api relativo pois não funcionará
     API_URL = 'https://cikai-sppe.vercel.app/api'
+    console.warn('⚠️ VITE_API_URL não definida, usando fallback:', API_URL)
+    console.warn('💡 Configure VITE_API_URL no Vercel para melhor performance')
   } else {
     // Em desenvolvimento, usar proxy local
     API_URL = '/api'
+  }
+} else {
+  // Se tiver VITE_API_URL, garantir que seja URL absoluta em produção
+  if (import.meta.env.PROD && !API_URL.startsWith('http')) {
+    console.warn('⚠️ VITE_API_URL não é uma URL absoluta, usando fallback')
+    API_URL = 'https://cikai-sppe.vercel.app/api'
   }
 }
 
