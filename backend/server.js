@@ -102,14 +102,14 @@ const connectDB = async () => {
       await mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 10000, // 10 segundos para selecionar servidor
+        serverSelectionTimeoutMS: 15000, // 15 segundos para selecionar servidor
         socketTimeoutMS: 45000, // 45 segundos para operações
-        connectTimeoutMS: 10000, // 10 segundos para conectar
+        connectTimeoutMS: 15000, // 15 segundos para conectar
         maxPoolSize: 10, // Máximo de conexões no pool
         minPoolSize: 1, // Mínimo de conexões no pool
-        // Manter buffering habilitado para evitar erros
-        bufferMaxEntries: 0, // Não fazer buffer infinito
-        bufferCommands: true, // Manter buffer habilitado para evitar erro "before initial connection"
+        // Configuração de buffering - permitir buffer mas com limite
+        bufferMaxEntries: 100, // Permitir até 100 comandos em buffer
+        bufferCommands: true, // Manter buffer habilitado
       })
       
       // Aguardar o evento 'open' para garantir que está realmente conectado
@@ -120,8 +120,8 @@ const connectDB = async () => {
         }
         
         const timeout = setTimeout(() => {
-          reject(new Error('Timeout aguardando conexão MongoDB'))
-        }, 10000)
+          reject(new Error('Timeout aguardando conexão MongoDB após 15 segundos'))
+        }, 15000)
         
         mongoose.connection.once('open', () => {
           clearTimeout(timeout)
