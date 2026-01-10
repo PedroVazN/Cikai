@@ -17,9 +17,10 @@ Este guia explica como fazer o deploy do frontend e backend no Vercel.
 3. Configure o projeto:
    - **Root Directory**: `backend`
    - **Framework Preset**: Other
-   - **Build Command**: (deixe vazio ou `npm install`)
+   - **Build Command**: (deixe vazio)
    - **Output Directory**: (deixe vazio)
    - **Install Command**: `npm install`
+   - **Entry Point**: `api/index.js` (ou deixe vazio, o vercel.json já configura)
 
 ### 1.2. Variáveis de Ambiente do Backend
 

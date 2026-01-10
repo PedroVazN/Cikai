@@ -36,24 +36,69 @@ app.use('/api/upload', uploadRoutes)
 
 // Rota de teste
 app.get('/api', (req, res) => {
-  res.json({ message: 'API Célia Ikai está funcionando!' })
+  res.json({ message: 'API C.Ikai está funcionando!', timestamp: new Date().toISOString() })
+})
+
+// Health check para Vercel
+app.get('/', (req, res) => {
+  res.json({ message: 'Backend C.Ikai API', status: 'online', timestamp: new Date().toISOString() })
 })
 
 // Conexão MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/celia-ikai', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
+let isConnected = false
+
+const connectDB = async () => {
+  if (isConnected || mongoose.connection.readyState === 1) {
+    return
+  }
+
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI não está definida nas variáveis de ambiente')
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    isConnected = true
     console.log('✅ Conectado ao MongoDB')
+  } catch (error) {
+    console.error('❌ Erro ao conectar ao MongoDB:', error.message)
+    // No Vercel, não fazer exit, apenas logar o erro
+    if (process.env.VERCEL) {
+      console.error('Erro de conexão MongoDB no Vercel - Verifique MONGODB_URI')
+    } else {
+      process.exit(1)
+    }
+  }
+}
+
+// Conectar ao MongoDB
+connectDB()
+
+// Middleware para garantir conexão antes de processar requisições
+app.use(async (req, res, next) => {
+  if (!isConnected && mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB()
+    } catch (error) {
+      return res.status(500).json({ 
+        error: 'Erro de conexão com o banco de dados',
+        message: process.env.NODE_ENV === 'production' ? 'Erro interno do servidor' : error.message 
+      })
+    }
+  }
+  next()
+})
+
+// Apenas iniciar servidor se não estiver no Vercel
+if (!process.env.VERCEL) {
+  mongoose.connection.once('open', () => {
     app.listen(PORT, () => {
       console.log(`🚀 Servidor rodando na porta ${PORT}`)
     })
   })
-  .catch((error) => {
-    console.error('❌ Erro ao conectar ao MongoDB:', error)
-    process.exit(1)
-  })
+}
 
 export default app
