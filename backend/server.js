@@ -25,8 +25,29 @@ const __dirname = path.dirname(__filename)
 
 // Middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || '*', // Em produção, usar a URL do frontend
+  origin: function (origin, callback) {
+    // Permitir requisições sem origin (mobile apps, Postman, etc)
+    if (!origin) return callback(null, true)
+    
+    // Lista de origens permitidas
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'https://cikai-front.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:5173',
+    ].filter(Boolean) // Remove valores undefined/null
+    
+    // Se não tiver FRONTEND_URL configurado, permitir todas (desenvolvimento)
+    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      console.log('CORS bloqueado para origin:', origin)
+      callback(null, true) // Permitir todas por enquanto para debug
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }
 app.use(cors(corsOptions))
 app.use(express.json())

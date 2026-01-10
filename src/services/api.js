@@ -50,6 +50,9 @@ api.interceptors.request.use(
       delete config.headers['Content-Type']
     }
     
+    // Log da requisição para debug
+    console.log('📤 Requisição:', config.method?.toUpperCase(), config.baseURL + config.url)
+    
     return config
   },
   (error) => {
@@ -59,8 +62,18 @@ api.interceptors.request.use(
 
 // Interceptor para tratar erros de autenticação
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('✅ Resposta recebida:', response.config.method?.toUpperCase(), response.config.url, response.status)
+    return response
+  },
   (error) => {
+    console.error('❌ Erro na requisição:', {
+      url: error.config?.baseURL + error.config?.url,
+      status: error.response?.status,
+      message: error.message,
+      response: error.response?.data
+    })
+    
     if (error.response?.status === 401) {
       localStorage.removeItem('adminToken')
       window.location.href = '/admin/login'
