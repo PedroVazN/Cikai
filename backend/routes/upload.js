@@ -19,6 +19,11 @@ const useCloudinary =
   process.env.CLOUDINARY_API_KEY && 
   process.env.CLOUDINARY_API_SECRET
 
+// No Vercel, Cloudinary é obrigatório (não pode usar disk storage)
+if (process.env.VERCEL && !useCloudinary) {
+  console.warn('⚠️ VERCEL detectado mas Cloudinary não configurado! Uploads falharão.')
+}
+
 if (useCloudinary) {
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -27,22 +32,32 @@ if (useCloudinary) {
   })
 }
 
-// Configurar storage do Multer (local)
-const uploadsDir = path.join(__dirname, '../uploads')
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true })
-}
+// Configurar storage do Multer
+// No Vercel, usar memory storage (não pode criar diretórios)
+// Em desenvolvimento, usar disk storage
+let storage
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsDir)
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-    const ext = path.extname(file.originalname)
-    cb(null, 'image-' + uniqueSuffix + ext)
-  },
-})
+if (process.env.VERCEL || useCloudinary) {
+  // No Vercel ou com Cloudinary, usar memory storage
+  storage = multer.memoryStorage()
+} else {
+  // Em desenvolvimento local, usar disk storage
+  const uploadsDir = path.join(__dirname, '../uploads')
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true })
+  }
+  
+  storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadsDir)
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+      const ext = path.extname(file.originalname)
+      cb(null, 'image-' + uniqueSuffix + ext)
+    },
+  })
+}
 
 const upload = multer({ 
   storage,
@@ -83,6 +98,14 @@ const uploadMultiple = multer({
 // POST /api/upload - Upload de imagem única (admin)
 router.post('/', authenticateToken, upload.single('image'), async (req, res) => {
   try {
+    // No Vercel, Cloudinary é obrigatório
+    if (process.env.VERCEL && !useCloudinary) {
+      return res.status(500).json({
+        success: false,
+        message: 'Cloudinary não configurado. Configure as variáveis CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY e CLOUDINARY_API_SECRET no Vercel.'
+      })
+    }
+
     if (!req.file) {
       return res.status(400).json({ 
         success: false,
@@ -94,14 +117,31 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
 
     if (useCloudinary) {
       // Upload para Cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, {
+      const uploadOptions = {
         folder: 'celia-ikai',
         resource_type: 'image',
-      })
-      imageUrl = result.secure_url
+      }
       
-      // Deletar arquivo local após upload
-      fs.unlinkSync(req.file.path)
+      let result
+      if (req.file.buffer) {
+        // Memory storage (Vercel) - usar upload_stream com Promise
+        result = await new Promise((resolve, reject) => {
+          const uploadStream = cloudinary.uploader.upload_stream(uploadOptions, (error, result) => {
+            if (error) reject(error)
+            else resolve(result)
+          })
+          uploadStream.end(req.file.buffer)
+        })
+      } else {
+        // Disk storage (desenvolvimento)
+        result = await cloudinary.uploader.upload(req.file.path, uploadOptions)
+        // Deletar arquivo local após upload
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path)
+        }
+      }
+      
+      imageUrl = result.secure_url
     } else {
       // Usar URL local (precisa ser acessível via HTTP)
       // Em produção, usar a URL do backend no Vercel
@@ -117,9 +157,13 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
       message: 'Imagem enviada com sucesso'
     })
   } catch (error) {
-    // Deletar arquivo em caso de erro
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path)
+    // Deletar arquivo em caso de erro (apenas se usar disk storage)
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      try {
+        fs.unlinkSync(req.file.path)
+      } catch (unlinkError) {
+        console.error('Erro ao deletar arquivo:', unlinkError.message)
+      }
     }
     res.status(500).json({ 
       success: false,
@@ -166,6 +210,14 @@ const handleMulterError = (err, req, res, next) => {
 // POST /api/upload/multiple - Upload de múltiplas imagens (admin)
 router.post('/multiple', authenticateToken, uploadMultiple.array('images'), handleMulterError, async (req, res) => {
   try {
+    // No Vercel, Cloudinary é obrigatório
+    if (process.env.VERCEL && !useCloudinary) {
+      return res.status(500).json({
+        success: false,
+        message: 'Cloudinary não configurado. Configure as variáveis CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY e CLOUDINARY_API_SECRET no Vercel.'
+      })
+    }
+
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ 
         success: false,
@@ -183,14 +235,28 @@ router.post('/multiple', authenticateToken, uploadMultiple.array('images'), hand
 
         if (useCloudinary) {
           // Upload para Cloudinary
-          const result = await cloudinary.uploader.upload(file.path, {
+          const uploadOptions = {
             folder: 'celia-ikai',
             resource_type: 'image',
-          })
+          }
           
-          // Deletar arquivo local após upload
-          if (fs.existsSync(file.path)) {
-            fs.unlinkSync(file.path)
+          let result
+          if (file.buffer) {
+            // Memory storage (Vercel) - usar upload_stream
+            result = await new Promise((resolve, reject) => {
+              const uploadStream = cloudinary.uploader.upload_stream(uploadOptions, (error, result) => {
+                if (error) reject(error)
+                else resolve(result)
+              })
+              uploadStream.end(file.buffer)
+            })
+          } else {
+            // Disk storage (desenvolvimento)
+            result = await cloudinary.uploader.upload(file.path, uploadOptions)
+            // Deletar arquivo local após upload
+            if (fs.existsSync(file.path)) {
+              fs.unlinkSync(file.path)
+            }
           }
           
           return {
