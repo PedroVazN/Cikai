@@ -104,7 +104,10 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
       fs.unlinkSync(req.file.path)
     } else {
       // Usar URL local (precisa ser acessível via HTTP)
-      const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+      // Em produção, usar a URL do backend no Vercel
+      const baseUrl = process.env.BASE_URL || (process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : 'http://localhost:5000')
       imageUrl = `${baseUrl}/uploads/${req.file.filename}`
     }
 
@@ -197,7 +200,10 @@ router.post('/multiple', authenticateToken, uploadMultiple.array('images'), hand
           }
         } else {
           // Usar URL local
-          const baseUrl = process.env.BASE_URL || 'http://localhost:5000'
+          // Em produção, usar a URL do backend no Vercel
+          const baseUrl = process.env.BASE_URL || (process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}` 
+            : 'http://localhost:5000')
           return {
             success: true,
             url: `${baseUrl}/uploads/${file.filename}`,

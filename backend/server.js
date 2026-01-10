@@ -17,7 +17,11 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Middleware
-app.use(cors())
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*', // Em produção, usar a URL do frontend
+  credentials: true,
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
