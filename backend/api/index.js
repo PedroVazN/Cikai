@@ -49,16 +49,11 @@ async function loadApp() {
 // Handler para Vercel
 export default async (req, res) => {
   try {
-    console.log('=== Request ===')
-    console.log('Method:', req.method)
-    console.log('URL:', req.url)
-    console.log('MongoDB URI:', process.env.MONGODB_URI ? 'Definida ✅' : 'NÃO DEFINIDA ❌')
-    
     // Carregar app se necessário
     const expressApp = await loadApp()
     
-    // Processar requisição
-    return expressApp(req, res)
+    // Processar requisição diretamente
+    expressApp(req, res)
   } catch (error) {
     console.error('=== Erro no handler ===')
     console.error('Error:', error.message)

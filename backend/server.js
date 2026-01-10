@@ -115,7 +115,13 @@ if (!process.env.VERCEL) {
 // No Vercel, não conectar aqui - será conectado no middleware
 
 // Middleware para garantir conexão antes de processar requisições
+// Apenas para rotas que precisam do banco (não para health check)
 app.use(async (req, res, next) => {
+  // Permitir health checks sem conexão
+  if (req.path === '/' || req.path === '/api') {
+    return next()
+  }
+  
   try {
     // Se não estiver conectado, tentar conectar
     if (!isConnected && mongoose.connection.readyState !== 1) {
@@ -123,17 +129,23 @@ app.use(async (req, res, next) => {
       await connectDB()
     }
     
-    // Verificar se está conectado
+    // Verificar se está conectado (apenas para rotas que precisam)
     if (mongoose.connection.readyState !== 1) {
       console.error('MongoDB não está conectado. Estado:', mongoose.connection.readyState)
       console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
       
-      return res.status(500).json({ 
-        error: 'Erro de conexão com o banco de dados',
-        message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
-        connectionState: mongoose.connection.readyState,
-        hasMongoUri: !!process.env.MONGODB_URI
-      })
+      // Tentar conectar mais uma vez
+      try {
+        await connectDB()
+      } catch (connectError) {
+        console.error('Erro ao tentar reconectar:', connectError.message)
+        return res.status(500).json({ 
+          error: 'Erro de conexão com o banco de dados',
+          message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
+          connectionState: mongoose.connection.readyState,
+          hasMongoUri: !!process.env.MONGODB_URI
+        })
+      }
     }
     
     next()
