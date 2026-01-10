@@ -77,55 +77,104 @@ app.get('/', (req, res) => {
 
 // Conexão MongoDB
 let isConnected = false
+let connectionPromise = null
 
 const connectDB = async () => {
+  // Se já está conectado, retornar
   if (isConnected || mongoose.connection.readyState === 1) {
     return
   }
 
-  try {
-    if (!process.env.MONGODB_URI) {
-      throw new Error('MONGODB_URI não está definida nas variáveis de ambiente')
-    }
-
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    isConnected = true
-    console.log('✅ Conectado ao MongoDB')
-  } catch (error) {
-    console.error('❌ Erro ao conectar ao MongoDB:', error.message)
-    // No Vercel, não fazer exit, apenas logar o erro
-    if (process.env.VERCEL) {
-      console.error('Erro de conexão MongoDB no Vercel - Verifique MONGODB_URI')
-    } else {
-      process.exit(1)
-    }
+  // Se já está tentando conectar, aguardar a promise existente
+  if (connectionPromise) {
+    return connectionPromise
   }
+
+  // Criar nova promise de conexão
+  connectionPromise = (async () => {
+    try {
+      if (!process.env.MONGODB_URI) {
+        throw new Error('MONGODB_URI não está definida nas variáveis de ambiente')
+      }
+
+      console.log('🔄 Conectando ao MongoDB...')
+      
+      await mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 10000, // 10 segundos para selecionar servidor
+        socketTimeoutMS: 45000, // 45 segundos para operações
+        connectTimeoutMS: 10000, // 10 segundos para conectar
+        maxPoolSize: 10, // Máximo de conexões no pool
+        minPoolSize: 1, // Mínimo de conexões no pool
+        bufferMaxEntries: 0, // Desabilitar buffering (falha rápido se não conectar)
+        bufferCommands: false, // Não fazer buffer de comandos
+      })
+      
+      isConnected = true
+      connectionPromise = null // Limpar promise após sucesso
+      console.log('✅ Conectado ao MongoDB')
+      
+      // Event listeners
+      mongoose.connection.on('error', (err) => {
+        console.error('❌ Erro na conexão MongoDB:', err)
+        isConnected = false
+        connectionPromise = null
+      })
+
+      mongoose.connection.on('disconnected', () => {
+        console.warn('⚠️ MongoDB desconectado')
+        isConnected = false
+        connectionPromise = null
+      })
+      
+      return true
+    } catch (error) {
+      console.error('❌ Erro ao conectar ao MongoDB:', error.message)
+      isConnected = false
+      connectionPromise = null // Limpar promise após erro
+      
+      // No Vercel, não fazer exit, apenas logar o erro
+      if (process.env.VERCEL) {
+        console.error('Erro de conexão MongoDB no Vercel - Verifique MONGODB_URI')
+      } else {
+        process.exit(1)
+      }
+      throw error
+    }
+  })()
+
+  return connectionPromise
 }
 
 // Conectar ao MongoDB (não bloquear inicialização)
 // No Vercel, a conexão será feita na primeira requisição
-// NÃO conectar durante a importação para evitar crash
 if (!process.env.VERCEL) {
   // Em desenvolvimento, conectar normalmente
   connectDB()
 }
-// No Vercel, não conectar aqui - será conectado no middleware
 
 // Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
   try {
     // Se não estiver conectado, tentar conectar
     if (!isConnected && mongoose.connection.readyState !== 1) {
-      console.log('Tentando conectar ao MongoDB...')
-      await connectDB()
+      console.log('🔄 Tentando conectar ao MongoDB...')
+      try {
+        await connectDB()
+      } catch (connectError) {
+        console.error('❌ Falha ao conectar MongoDB:', connectError.message)
+        return res.status(500).json({ 
+          error: 'Erro de conexão com o banco de dados',
+          message: 'Não foi possível conectar ao MongoDB. Verifique MONGODB_URI e Network Access.',
+          mongoUri: process.env.MONGODB_URI ? 'Definida' : 'NÃO DEFINIDA'
+        })
+      }
     }
     
-    // Verificar se está conectado
+    // Verificar se está conectado após tentativa
     if (mongoose.connection.readyState !== 1) {
-      console.error('MongoDB não está conectado. Estado:', mongoose.connection.readyState)
+      console.error('❌ MongoDB não está conectado. Estado:', mongoose.connection.readyState)
       console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
       
       return res.status(500).json({ 
@@ -138,7 +187,7 @@ app.use(async (req, res, next) => {
     
     next()
   } catch (error) {
-    console.error('Erro no middleware de conexão:', error)
+    console.error('❌ Erro no middleware de conexão:', error)
     console.error('Stack:', error.stack)
     
     return res.status(500).json({ 
