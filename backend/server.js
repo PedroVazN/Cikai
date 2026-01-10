@@ -4,12 +4,19 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
+
+// Carregar variáveis de ambiente primeiro
+dotenv.config()
+
+// Verificar variáveis críticas (apenas log, não crashar)
+if (!process.env.MONGODB_URI && process.env.VERCEL) {
+  console.warn('⚠️ MONGODB_URI não está definida! A conexão falhará.')
+}
+
 import empreendimentosRoutes from './routes/empreendimentos.js'
 import leadsRoutes from './routes/leads.js'
 import adminRoutes from './routes/admin.js'
 import uploadRoutes from './routes/upload.js'
-
-dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -79,15 +86,12 @@ const connectDB = async () => {
 
 // Conectar ao MongoDB (não bloquear inicialização)
 // No Vercel, a conexão será feita na primeira requisição
-if (process.env.VERCEL) {
-  // No Vercel, conectar de forma assíncrona sem bloquear
-  connectDB().catch(err => {
-    console.error('Erro ao conectar MongoDB (não bloqueante):', err.message)
-  })
-} else {
+// NÃO conectar durante a importação para evitar crash
+if (!process.env.VERCEL) {
   // Em desenvolvimento, conectar normalmente
   connectDB()
 }
+// No Vercel, não conectar aqui - será conectado no middleware
 
 // Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
