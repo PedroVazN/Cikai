@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Backend C.Ikai API', status: 'online', timestamp: new Date().toISOString() })
 })
 
-// Conexão MongoDB - SIMPLIFICADA (voltar ao básico que funcionava)
+// Conexão MongoDB
 let isConnected = false
 
 const connectDB = async () => {
@@ -88,64 +88,69 @@ const connectDB = async () => {
       throw new Error('MONGODB_URI não está definida nas variáveis de ambiente')
     }
 
-    console.log('🔄 Conectando ao MongoDB...')
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    
     isConnected = true
     console.log('✅ Conectado ao MongoDB')
   } catch (error) {
     console.error('❌ Erro ao conectar ao MongoDB:', error.message)
-    isConnected = false
-    if (!process.env.VERCEL) {
+    // No Vercel, não fazer exit, apenas logar o erro
+    if (process.env.VERCEL) {
+      console.error('Erro de conexão MongoDB no Vercel - Verifique MONGODB_URI')
+    } else {
       process.exit(1)
     }
-    throw error
   }
 }
 
-// Conectar ao MongoDB
+// Conectar ao MongoDB (não bloquear inicialização)
+// No Vercel, a conexão será feita na primeira requisição
+// NÃO conectar durante a importação para evitar crash
 if (!process.env.VERCEL) {
+  // Em desenvolvimento, conectar normalmente
   connectDB()
 }
+// No Vercel, não conectar aqui - será conectado no middleware
 
-// Middleware - garantir conexão antes de processar
+// Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
   try {
-    // Se não estiver conectado, conectar e AGUARDAR estar pronto
-    if (!isConnected || mongoose.connection.readyState !== 1) {
+    // Se não estiver conectado, tentar conectar
+    if (!isConnected && mongoose.connection.readyState !== 1) {
+      console.log('Tentando conectar ao MongoDB...')
       await connectDB()
+    }
+    
+    // Verificar se está conectado
+    if (mongoose.connection.readyState !== 1) {
+      console.error('MongoDB não está conectado. Estado:', mongoose.connection.readyState)
+      console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
       
-      // Aguardar até estar realmente conectado (readyState === 1)
-      let attempts = 0
-      while (mongoose.connection.readyState !== 1 && attempts < 50) {
-        await new Promise(resolve => setTimeout(resolve, 100))
-        attempts++
-      }
-      
-      // Se ainda não conectou, retornar erro
-      if (mongoose.connection.readyState !== 1) {
-        return res.status(500).json({ 
-          error: 'Erro de conexão com o banco de dados',
-          message: 'MongoDB não conectou a tempo. Tente novamente.',
-          state: mongoose.connection.readyState
-        })
-      }
+      return res.status(500).json({ 
+        error: 'Erro de conexão com o banco de dados',
+        message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
+        connectionState: mongoose.connection.readyState,
+        hasMongoUri: !!process.env.MONGODB_URI
+      })
     }
     
     next()
   } catch (error) {
-    console.error('❌ Erro de conexão:', error.message)
+    console.error('Erro no middleware de conexão:', error)
+    console.error('Stack:', error.stack)
+    
     return res.status(500).json({ 
       error: 'Erro de conexão com o banco de dados',
-      message: error.message
+      message: error.message,
+      mongoUri: process.env.MONGODB_URI ? 'Definida' : 'NÃO DEFINIDA',
+      errorType: error.name
     })
   }
 })
 
-// Middleware de tratamento de erros global
+// Middleware de tratamento de erros global (deve ser o último)
 app.use((error, req, res, next) => {
   console.error('Erro não tratado:', error)
   if (!res.headersSent) {
