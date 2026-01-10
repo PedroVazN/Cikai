@@ -107,8 +107,31 @@ const connectDB = async () => {
         connectTimeoutMS: 10000, // 10 segundos para conectar
         maxPoolSize: 10, // Máximo de conexões no pool
         minPoolSize: 1, // Mínimo de conexões no pool
-        bufferMaxEntries: 0, // Desabilitar buffering (falha rápido se não conectar)
-        bufferCommands: false, // Não fazer buffer de comandos
+        // Manter buffering habilitado para evitar erros
+        bufferMaxEntries: 0, // Não fazer buffer infinito
+        bufferCommands: true, // Manter buffer habilitado para evitar erro "before initial connection"
+      })
+      
+      // Aguardar o evento 'open' para garantir que está realmente conectado
+      await new Promise((resolve, reject) => {
+        if (mongoose.connection.readyState === 1) {
+          resolve()
+          return
+        }
+        
+        const timeout = setTimeout(() => {
+          reject(new Error('Timeout aguardando conexão MongoDB'))
+        }, 10000)
+        
+        mongoose.connection.once('open', () => {
+          clearTimeout(timeout)
+          resolve()
+        })
+        
+        mongoose.connection.once('error', (err) => {
+          clearTimeout(timeout)
+          reject(err)
+        })
       })
       
       isConnected = true
@@ -157,11 +180,13 @@ if (!process.env.VERCEL) {
 // Middleware para garantir conexão antes de processar requisições
 app.use(async (req, res, next) => {
   try {
-    // Se não estiver conectado, tentar conectar
+    // Se não estiver conectado, tentar conectar e AGUARDAR conclusão
     if (!isConnected && mongoose.connection.readyState !== 1) {
       console.log('🔄 Tentando conectar ao MongoDB...')
       try {
         await connectDB()
+        // Aguardar um pouco para garantir que a conexão está estável
+        await new Promise(resolve => setTimeout(resolve, 200))
       } catch (connectError) {
         console.error('❌ Falha ao conectar MongoDB:', connectError.message)
         return res.status(500).json({ 
@@ -173,16 +198,39 @@ app.use(async (req, res, next) => {
     }
     
     // Verificar se está conectado após tentativa
-    if (mongoose.connection.readyState !== 1) {
-      console.error('❌ MongoDB não está conectado. Estado:', mongoose.connection.readyState)
-      console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
-      
-      return res.status(500).json({ 
-        error: 'Erro de conexão com o banco de dados',
-        message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
-        connectionState: mongoose.connection.readyState,
-        hasMongoUri: !!process.env.MONGODB_URI
-      })
+    // Estados: 0 = desconectado, 1 = conectado, 2 = conectando, 3 = desconectando
+    const readyState = mongoose.connection.readyState
+    if (readyState !== 1) {
+      // Se estiver conectando (2), aguardar um pouco mais
+      if (readyState === 2) {
+        console.log('⏳ MongoDB ainda conectando, aguardando...')
+        let attempts = 0
+        while (mongoose.connection.readyState === 2 && attempts < 10) {
+          await new Promise(resolve => setTimeout(resolve, 200))
+          attempts++
+        }
+        
+        // Verificar novamente
+        if (mongoose.connection.readyState !== 1) {
+          console.error('❌ MongoDB não conectou a tempo. Estado:', mongoose.connection.readyState)
+          return res.status(500).json({ 
+            error: 'Erro de conexão com o banco de dados',
+            message: 'MongoDB está demorando para conectar. Tente novamente em alguns segundos.',
+            connectionState: mongoose.connection.readyState,
+            hasMongoUri: !!process.env.MONGODB_URI
+          })
+        }
+      } else {
+        console.error('❌ MongoDB não está conectado. Estado:', readyState)
+        console.error('MONGODB_URI definida:', !!process.env.MONGODB_URI)
+        
+        return res.status(500).json({ 
+          error: 'Erro de conexão com o banco de dados',
+          message: 'MongoDB não está conectado. Verifique MONGODB_URI e Network Access.',
+          connectionState: readyState,
+          hasMongoUri: !!process.env.MONGODB_URI
+        })
+      }
     }
     
     next()
