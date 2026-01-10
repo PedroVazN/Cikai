@@ -99,40 +99,51 @@ const connectDB = async () => {
 
       console.log('🔄 Conectando ao MongoDB...')
       
+      // Conectar ao MongoDB
       await mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 15000, // 15 segundos para selecionar servidor
+        serverSelectionTimeoutMS: 30000, // 30 segundos para selecionar servidor
         socketTimeoutMS: 45000, // 45 segundos para operações
-        connectTimeoutMS: 15000, // 15 segundos para conectar
-        maxPoolSize: 10, // Máximo de conexões no pool
-        minPoolSize: 1, // Mínimo de conexões no pool
-        // Configuração de buffering - permitir buffer mas com limite
-        bufferMaxEntries: 100, // Permitir até 100 comandos em buffer
-        bufferCommands: true, // Manter buffer habilitado
+        connectTimeoutMS: 30000, // 30 segundos para conectar
+        maxPoolSize: 10,
+        minPoolSize: 1,
+        // Configuração de buffering - 0 = sem limite de tempo
+        bufferMaxEntries: 0, // Sem limite de comandos em buffer
+        bufferCommands: true, // Habilitar buffer
       })
       
-      // Aguardar o evento 'open' para garantir que está realmente conectado
+      // Aguardar explicitamente o evento 'open' para garantir conexão completa
+      // Isso é necessário porque mongoose.connect() pode resolver antes da conexão estar pronta
       await new Promise((resolve, reject) => {
+        // Se já está conectado, resolver imediatamente
         if (mongoose.connection.readyState === 1) {
           resolve()
           return
         }
         
+        // Timeout de 30 segundos
         const timeout = setTimeout(() => {
-          reject(new Error('Timeout aguardando conexão MongoDB após 15 segundos'))
-        }, 15000)
+          reject(new Error('Timeout: MongoDB não conectou após 30 segundos'))
+        }, 30000)
         
+        // Aguardar evento 'open'
         mongoose.connection.once('open', () => {
           clearTimeout(timeout)
           resolve()
         })
         
+        // Se der erro, rejeitar
         mongoose.connection.once('error', (err) => {
           clearTimeout(timeout)
           reject(err)
         })
       })
+      
+      // Verificar novamente após aguardar evento
+      if (mongoose.connection.readyState !== 1) {
+        throw new Error('MongoDB não está conectado após aguardar evento open')
+      }
       
       isConnected = true
       connectionPromise = null // Limpar promise após sucesso
