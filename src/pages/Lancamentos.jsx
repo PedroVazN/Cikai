@@ -5,12 +5,36 @@ import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 
 function Lancamentos() {
   const [empreendimentos, setEmpreendimentos] = useState([])
+  const [bairrosDisponiveis, setBairrosDisponiveis] = useState([])
   const [loading, setLoading] = useState(true)
   const [filtros, setFiltros] = useState({
     bairro: '',
     dormitorios: '',
     precoMax: '',
   })
+
+  // Buscar bairros disponíveis ao carregar
+  useEffect(() => {
+    const fetchBairros = async () => {
+      try {
+        const response = await api.get('/empreendimentos')
+        const todosEmpreendimentos = response.data
+        
+        // Extrair bairros únicos e ordenar
+        const bairrosUnicos = [...new Set(
+          todosEmpreendimentos
+            .map(emp => emp.bairro)
+            .filter(bairro => bairro && bairro.trim() !== '')
+        )].sort()
+        
+        setBairrosDisponiveis(bairrosUnicos)
+      } catch (error) {
+        console.error('Erro ao carregar bairros:', error)
+      }
+    }
+    
+    fetchBairros()
+  }, [])
 
   useEffect(() => {
     fetchEmpreendimentos()
@@ -56,13 +80,18 @@ function Lancamentos() {
               <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Bairro
               </label>
-              <input
-                type="text"
+              <select
                 value={filtros.bairro}
                 onChange={(e) => setFiltros({ ...filtros, bairro: e.target.value })}
-                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
-                placeholder="Digite o bairro"
-              />
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300 bg-white"
+              >
+                <option value="">Todos os Bairros</option>
+                {bairrosDisponiveis.map((bairro) => (
+                  <option key={bairro} value={bairro}>
+                    {bairro}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-3">
