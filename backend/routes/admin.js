@@ -1,8 +1,17 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 import Admin from '../models/Admin.js'
 
 const router = express.Router()
+
+// Helper para garantir conexão
+const ensureConnection = async () => {
+  if (mongoose.connection.readyState !== 1) {
+    const { connectDB } = await import('../server.js')
+    await connectDB()
+  }
+}
 
 // POST /api/admin/login - Login
 router.post('/login', async (req, res) => {
