@@ -51,11 +51,6 @@ function Home() {
         <div className="relative h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-3xl">
-              <div className="mb-8">
-                <span className="inline-block bg-gradient-to-r from-accent-500/95 to-accent-600/95 text-white px-6 py-2.5 rounded-full text-sm md:text-base font-semibold mb-4 shadow-luxury backdrop-blur-sm">
-                  ✨ Oportunidade Única
-                </span>
-              </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight text-white drop-shadow-2xl">
                 Parcelas Menores que o
                 <span className="block mt-3 text-accent-400">Seu Aluguel</span>
