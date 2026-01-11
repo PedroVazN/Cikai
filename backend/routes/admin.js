@@ -7,6 +7,7 @@ const router = express.Router()
 // POST /api/admin/login - Login
 router.post('/login', async (req, res) => {
   try {
+    await ensureConnection()
     const { email, senha } = req.body
 
     if (!email || !senha) {

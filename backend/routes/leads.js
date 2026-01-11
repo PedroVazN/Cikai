@@ -1,12 +1,22 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import Lead from '../models/Lead.js'
 import { authenticateToken } from '../middleware/auth.js'
 
 const router = express.Router()
 
+// Helper para garantir conexão
+const ensureConnection = async () => {
+  if (mongoose.connection.readyState !== 1) {
+    const { connectDB } = await import('../server.js')
+    await connectDB()
+  }
+}
+
 // POST /api/leads - Criar novo lead (público)
 router.post('/', async (req, res) => {
   try {
+    await ensureConnection()
     const lead = new Lead(req.body)
     await lead.save()
     res.status(201).json(lead)
@@ -18,6 +28,7 @@ router.post('/', async (req, res) => {
 // GET /api/leads - Listar todos (admin)
 router.get('/', authenticateToken, async (req, res) => {
   try {
+    await ensureConnection()
     const { empreendimentoId } = req.query
     const query = {}
 
@@ -28,8 +39,6 @@ router.get('/', authenticateToken, async (req, res) => {
     const leads = await Lead.find(query)
       .populate('empreendimentoId', 'nome')
       .sort({ criadoEm: -1 })
-      .maxTimeMS(5000)
-      .lean()
 
     res.json(leads)
   } catch (error) {
@@ -40,10 +49,9 @@ router.get('/', authenticateToken, async (req, res) => {
 // GET /api/leads/:id - Buscar por ID (admin)
 router.get('/:id', authenticateToken, async (req, res) => {
   try {
+    await ensureConnection()
     const lead = await Lead.findById(req.params.id)
       .populate('empreendimentoId', 'nome')
-      .maxTimeMS(5000)
-      .lean()
     if (!lead) {
       return res.status(404).json({ message: 'Lead não encontrado' })
     }

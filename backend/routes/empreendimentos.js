@@ -1,12 +1,22 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import Empreendimento from '../models/Empreendimento.js'
 import { authenticateToken } from '../middleware/auth.js'
 
 const router = express.Router()
 
+// Helper para garantir conexão
+const ensureConnection = async () => {
+  if (mongoose.connection.readyState !== 1) {
+    const { connectDB } = await import('../server.js')
+    await connectDB()
+  }
+}
+
 // GET /api/empreendimentos - Listar todos (público)
 router.get('/', async (req, res) => {
   try {
+    await ensureConnection()
     const { bairro, dormitorios, precoMax, destaque, limit } = req.query
     const query = { ativo: true }
 
@@ -22,17 +32,12 @@ router.get('/', async (req, res) => {
       query.precoInicial = { $lte: parseFloat(precoMax) }
     }
 
-    // Query otimizada com timeout e limite
-    let queryBuilder = Empreendimento.find(query)
-      .sort({ criadoEm: -1 })
-      .maxTimeMS(5000) // Timeout de 5 segundos para a query
-      .lean() // Retornar objetos JavaScript simples (mais rápido)
+    // Query simples e rápida
+    let queryBuilder = Empreendimento.find(query).sort({ criadoEm: -1 })
 
     if (destaque === 'true') {
-      const limitNum = parseInt(limit) || 3
-      queryBuilder = queryBuilder.limit(limitNum)
+      queryBuilder = queryBuilder.limit(parseInt(limit) || 3)
     } else {
-      // Limite padrão para evitar retornar muitos dados
       queryBuilder = queryBuilder.limit(100)
     }
 
@@ -62,6 +67,7 @@ router.get('/:id', async (req, res) => {
 // POST /api/empreendimentos - Criar novo (admin)
 router.post('/', authenticateToken, async (req, res) => {
   try {
+    await ensureConnection()
     // Validação básica
     const { nome, bairro, precoInicial, descricao } = req.body
     
@@ -104,6 +110,7 @@ router.post('/', authenticateToken, async (req, res) => {
 // PUT /api/empreendimentos/:id - Atualizar (admin)
 router.put('/:id', authenticateToken, async (req, res) => {
   try {
+    await ensureConnection()
     // Validar preço se fornecido
     if (req.body.precoInicial !== undefined && req.body.precoInicial <= 0) {
       return res.status(400).json({ 
@@ -144,8 +151,8 @@ router.put('/:id', authenticateToken, async (req, res) => {
 // DELETE /api/empreendimentos/:id - Deletar (admin)
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
+    await ensureConnection()
     const empreendimento = await Empreendimento.findByIdAndDelete(req.params.id)
-      .maxTimeMS(5000)
     if (!empreendimento) {
       return res.status(404).json({ message: 'Empreendimento não encontrado' })
     }
