@@ -83,7 +83,7 @@ const connectDB = async () => {
   // Se já está conectado, retornar imediatamente
   if (mongoose.connection.readyState === 1) {
     isConnected = true
-    return
+    return true
   }
 
   // Se já está tentando conectar, aguardar a mesma promise
@@ -96,6 +96,28 @@ const connectDB = async () => {
     try {
       if (!process.env.MONGODB_URI) {
         throw new Error('MONGODB_URI não está definida nas variáveis de ambiente')
+      }
+
+      // Se já está conectando, aguardar
+      if (mongoose.connection.readyState === 2) {
+        console.log('Aguardando conexão em andamento...')
+        await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            reject(new Error('Timeout aguardando conexão'))
+          }, 10000)
+          
+          mongoose.connection.once('connected', () => {
+            clearTimeout(timeout)
+            resolve()
+          })
+          
+          mongoose.connection.once('error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+          })
+        })
+        isConnected = true
+        return true
       }
 
       // Configurações otimizadas para Vercel/serverless
@@ -111,8 +133,17 @@ const connectDB = async () => {
         bufferCommands: false, // Não bufferizar comandos
       })
       
+      // AGUARDAR conexão estar realmente pronta
+      await new Promise((resolve) => {
+        if (mongoose.connection.readyState === 1) {
+          resolve()
+        } else {
+          mongoose.connection.once('connected', resolve)
+        }
+      })
+      
       isConnected = true
-      console.log('✅ Conectado ao MongoDB')
+      console.log('✅ Conectado ao MongoDB - Estado:', mongoose.connection.readyState)
       
       // Event listeners para manter conexão
       mongoose.connection.on('error', (err) => {
@@ -174,11 +205,12 @@ app.use(async (req, res, next) => {
     
     // 0 = desconectado, 1 = conectado, 2 = conectando, 3 = desconectando
     if (connectionState !== 1) {
-      // Se não está conectado, tentar conectar e AGUARDAR
+      // Se não está conectado, tentar conectar e AGUARDAR completamente
       if (connectionState === 0 || connectionState === 3) {
         console.log('Tentando conectar ao MongoDB...')
         try {
-          await connectDB() // AGUARDAR conexão completar
+          await connectDB() // AGUARDAR conexão completar completamente
+          // Verificar novamente após conectar
           connectionState = mongoose.connection.readyState
         } catch (connectError) {
           console.error('Erro ao conectar:', connectError.message)
@@ -191,24 +223,39 @@ app.use(async (req, res, next) => {
         }
       }
       
-      // Se ainda está conectando, aguardar até completar
+      // Se ainda está conectando, aguardar até completar usando eventos
       if (connectionState === 2) {
         console.log('Aguardando conexão MongoDB completar...')
-        // Aguardar até 10 segundos para conexão completar
-        let waited = 0
-        while (mongoose.connection.readyState !== 1 && waited < 10000) {
-          await new Promise(resolve => setTimeout(resolve, 200))
-          waited += 200
-          connectionState = mongoose.connection.readyState
-          
-          // Se mudou para desconectado, tentar conectar novamente
-          if (connectionState === 0) {
-            try {
-              await connectDB()
-            } catch (e) {
-              // Ignorar erro, continuar aguardando
+        try {
+          await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+              reject(new Error('Timeout aguardando conexão MongoDB'))
+            }, 10000)
+            
+            if (mongoose.connection.readyState === 1) {
+              clearTimeout(timeout)
+              resolve()
+              return
             }
-          }
+            
+            mongoose.connection.once('connected', () => {
+              clearTimeout(timeout)
+              resolve()
+            })
+            
+            mongoose.connection.once('error', (err) => {
+              clearTimeout(timeout)
+              reject(err)
+            })
+          })
+          connectionState = mongoose.connection.readyState
+        } catch (waitError) {
+          console.error('Erro ao aguardar conexão:', waitError.message)
+          return res.status(500).json({ 
+            error: 'Erro de conexão com o banco de dados',
+            message: 'Timeout aguardando conexão MongoDB.',
+            connectionState: mongoose.connection.readyState
+          })
         }
       }
       
@@ -225,18 +272,21 @@ app.use(async (req, res, next) => {
       }
     }
     
-    // Garantir que está realmente conectado antes de prosseguir
-    if (mongoose.connection.readyState === 1) {
-      next()
-    } else {
+    // Verificação final - garantir que está realmente conectado
+    if (mongoose.connection.readyState !== 1) {
+      console.error('Estado final da conexão não é conectado:', mongoose.connection.readyState)
       return res.status(500).json({ 
         error: 'Erro de conexão com o banco de dados',
         message: 'Conexão MongoDB não está pronta.',
         connectionState: mongoose.connection.readyState
       })
     }
+    
+    // Só prosseguir se realmente estiver conectado
+    next()
   } catch (error) {
     console.error('Erro no middleware de conexão:', error)
+    console.error('Stack:', error.stack)
     
     return res.status(500).json({ 
       error: 'Erro de conexão com o banco de dados',
