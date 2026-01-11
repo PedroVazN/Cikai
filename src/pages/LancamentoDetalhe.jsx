@@ -116,16 +116,29 @@ function LancamentoDetalhe() {
                 Características
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                {empreendimento.metragemMin && (
+                {/* Metragens Disponíveis */}
+                {empreendimento.metragens && empreendimento.metragens.length > 0 && (
+                  <div className="p-6 bg-gradient-to-br from-accent-50 to-accent-100 rounded-xl border border-accent-200/50 shadow-sm md:col-span-2">
+                    <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Metragens Disponíveis</p>
+                    <div className="flex flex-wrap gap-2">
+                      {empreendimento.metragens.map((metragem, idx) => (
+                        <span key={idx} className="px-4 py-2 bg-white text-accent-700 rounded-lg font-bold text-lg border border-accent-200 shadow-sm">
+                          {metragem}m²
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {empreendimento.metragemMin && (!empreendimento.metragens || empreendimento.metragens.length === 0) && (
                   <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Área Mínima</p>
                     <p className="text-3xl font-bold text-primary-800">{empreendimento.metragemMin}m²</p>
                   </div>
                 )}
-                {empreendimento.metragemMax && (
-                  <div className="p-5 bg-gray-50 rounded-lg border border-gray-200">
-                    <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Área Máxima</p>
-                    <p className="text-2xl font-light text-gray-900">{empreendimento.metragemMax}m²</p>
+                {empreendimento.metragemMax && (!empreendimento.metragens || empreendimento.metragens.length === 0) && (
+                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                    <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Área Máxima</p>
+                    <p className="text-3xl font-bold text-primary-800">{empreendimento.metragemMax}m²</p>
                   </div>
                 )}
                 {empreendimento.dormitorios && (
