@@ -13,9 +13,12 @@ function AdminEmpreendimentos() {
     bairro: '',
     metragemMin: '',
     metragemMax: '',
+    metragens: [],
     dormitorios: '',
     suites: '',
     vagas: '',
+    vagasCarro: '',
+    vagasMoto: '',
     precoInicial: '',
     descricao: '',
     endereco: '',
@@ -24,6 +27,7 @@ function AdminEmpreendimentos() {
     areasLazer: [],
     ativo: true,
   })
+  const [novaMetragem, setNovaMetragem] = useState('')
   const [showMoreAreas, setShowMoreAreas] = useState(false)
   const [customArea, setCustomArea] = useState('')
   const [uploading, setUploading] = useState(false)
@@ -225,9 +229,12 @@ function AdminEmpreendimentos() {
         ...formData,
         metragemMin: formData.metragemMin ? Number(formData.metragemMin) : undefined,
         metragemMax: formData.metragemMax ? Number(formData.metragemMax) : undefined,
+        metragens: Array.isArray(formData.metragens) ? formData.metragens.map(m => Number(m)) : [],
         dormitorios: formData.dormitorios ? Number(formData.dormitorios) : undefined,
         suites: formData.suites ? Number(formData.suites) : undefined,
         vagas: formData.vagas ? Number(formData.vagas) : undefined,
+        vagasCarro: formData.vagasCarro ? Number(formData.vagasCarro) : undefined,
+        vagasMoto: formData.vagasMoto ? Number(formData.vagasMoto) : undefined,
         precoInicial: Number(formData.precoInicial),
       }
 
@@ -257,9 +264,12 @@ function AdminEmpreendimentos() {
       bairro: empreendimento.bairro || '',
       metragemMin: empreendimento.metragemMin || '',
       metragemMax: empreendimento.metragemMax || '',
+      metragens: empreendimento.metragens || [],
       dormitorios: empreendimento.dormitorios || '',
       suites: empreendimento.suites || '',
       vagas: empreendimento.vagas || '',
+      vagasCarro: empreendimento.vagasCarro || '',
+      vagasMoto: empreendimento.vagasMoto || '',
       precoInicial: empreendimento.precoInicial || '',
       descricao: empreendimento.descricao || '',
       endereco: empreendimento.endereco || '',
@@ -291,9 +301,12 @@ function AdminEmpreendimentos() {
       bairro: '',
       metragemMin: '',
       metragemMax: '',
+      metragens: [],
       dormitorios: '',
       suites: '',
       vagas: '',
+      vagasCarro: '',
+      vagasMoto: '',
       precoInicial: '',
       descricao: '',
       endereco: '',
@@ -439,6 +452,83 @@ function AdminEmpreendimentos() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Vagas de Carro
+                  </label>
+                  <input
+                    type="number"
+                    name="vagasCarro"
+                    value={formData.vagasCarro}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Vagas de Moto
+                  </label>
+                  <input
+                    type="number"
+                    name="vagasMoto"
+                    value={formData.vagasMoto}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Metragens Disponíveis (m²)
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="number"
+                      value={novaMetragem}
+                      onChange={(e) => setNovaMetragem(e.target.value)}
+                      placeholder="Ex: 31, 32, 33..."
+                      className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (novaMetragem && !formData.metragens.includes(Number(novaMetragem))) {
+                          setFormData({
+                            ...formData,
+                            metragens: [...formData.metragens, Number(novaMetragem)].sort((a, b) => a - b)
+                          })
+                          setNovaMetragem('')
+                        }
+                      }}
+                      className="px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-semibold"
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+                  {formData.metragens.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.metragens.map((metragem, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-semibold border border-primary-200"
+                        >
+                          {metragem}m²
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData({
+                                ...formData,
+                                metragens: formData.metragens.filter((_, i) => i !== index)
+                              })
+                            }}
+                            className="text-primary-600 hover:text-primary-800"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">

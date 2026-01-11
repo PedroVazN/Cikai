@@ -22,6 +22,10 @@ const empreendimentoSchema = new mongoose.Schema(
     metragemMax: {
       type: Number,
     },
+    metragens: {
+      type: [Number],
+      default: [],
+    },
     dormitorios: {
       type: Number,
     },
@@ -29,6 +33,12 @@ const empreendimentoSchema = new mongoose.Schema(
       type: Number,
     },
     vagas: {
+      type: Number,
+    },
+    vagasCarro: {
+      type: Number,
+    },
+    vagasMoto: {
       type: Number,
     },
     precoInicial: {

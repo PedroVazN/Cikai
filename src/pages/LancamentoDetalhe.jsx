@@ -142,7 +142,19 @@ function LancamentoDetalhe() {
                       : 'Não possui'}
                   </p>
                 </div>
-                {empreendimento.vagas && (
+                {empreendimento.vagasCarro && (
+                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                    <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas de Carro</p>
+                    <p className="text-3xl font-bold text-primary-800">{empreendimento.vagasCarro}</p>
+                  </div>
+                )}
+                {empreendimento.vagasMoto && (
+                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                    <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas de Moto</p>
+                    <p className="text-3xl font-bold text-primary-800">{empreendimento.vagasMoto}</p>
+                  </div>
+                )}
+                {empreendimento.vagas && !empreendimento.vagasCarro && (
                   <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas</p>
                     <p className="text-3xl font-bold text-primary-800">{empreendimento.vagas}</p>
