@@ -238,20 +238,20 @@ function Home() {
       </section>
 
       {/* Estatísticas */}
-      <section className="section-padding bg-gradient-to-br from-luxury-dark via-primary-900 to-luxury-navy text-white">
+      <section className="py-16 md:py-20 lg:py-28 bg-gradient-to-br from-luxury-dark via-primary-900 to-luxury-navy text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-16">
-            <div className="text-center">
-              <div className="text-6xl md:text-7xl font-bold mb-4 tracking-tight text-accent-400">5+</div>
-              <div className="text-gray-300 text-sm uppercase tracking-wider font-semibold">Anos de Experiência</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 md:gap-12 lg:gap-16">
+            <div className="text-center px-4">
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">5+</div>
+              <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Anos de Experiência</div>
             </div>
-            <div className="text-center">
-              <div className="text-6xl md:text-7xl font-bold mb-4 tracking-tight text-accent-400">500+</div>
-              <div className="text-gray-300 text-sm uppercase tracking-wider font-semibold">Clientes Atendidos</div>
+            <div className="text-center px-4">
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">500+</div>
+              <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Clientes Atendidos</div>
             </div>
-            <div className="text-center">
-              <div className="text-6xl md:text-7xl font-bold mb-4 tracking-tight text-accent-400">50+</div>
-              <div className="text-gray-300 text-sm uppercase tracking-wider font-semibold">Famílias Ajudadas</div>
+            <div className="text-center px-4">
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">50+</div>
+              <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Famílias Ajudadas</div>
             </div>
           </div>
         </div>
