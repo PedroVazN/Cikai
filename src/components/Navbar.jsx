@@ -10,36 +10,36 @@ function Navbar() {
   const isActive = (path) => location.pathname === path
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-gray-100">
+    <nav className="bg-white/98 backdrop-blur-md shadow-elegant sticky top-0 z-50 border-b border-gray-200/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img 
               src={logoImage} 
               alt="C.Ikai - Logo" 
-              className="h-16 md:h-20 object-contain"
+              className="h-18 md:h-24 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-2">
             <Link
               to="/"
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isActive('/')
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
+                  ? 'text-primary-700 bg-primary-50 shadow-sm'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
               }`}
             >
               Home
             </Link>
             <Link
               to="/lancamentos"
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isActive('/lancamentos')
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
+                  ? 'text-primary-700 bg-primary-50 shadow-sm'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
               }`}
             >
               Lançamentos
@@ -48,7 +48,7 @@ function Navbar() {
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-4 bg-gray-900 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
+              className="ml-3 bg-gradient-to-r from-primary-700 to-primary-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:from-primary-800 hover:to-primary-900 transition-all duration-300 shadow-elegant hover:shadow-elegant-lg transform hover:scale-105"
             >
               WhatsApp
             </a>
@@ -80,14 +80,14 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+        <div className="md:hidden border-t border-gray-200/50 bg-white/98 backdrop-blur-md">
+          <div className="px-4 pt-4 pb-4 space-y-2">
             <Link
               to="/"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
                 isActive('/')
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-600'
+                  ? 'text-primary-700 bg-primary-50 shadow-sm'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -95,15 +95,24 @@ function Navbar() {
             </Link>
             <Link
               to="/lancamentos"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
                 isActive('/lancamentos')
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-600'
+                  ? 'text-primary-700 bg-primary-50 shadow-sm'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
               }`}
               onClick={() => setIsOpen(false)}
             >
               Lançamentos
             </Link>
+            <a
+              href={generateWhatsAppLink(generateContatoMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-primary-700 to-primary-800 text-white hover:from-primary-800 hover:to-primary-900 transition-all duration-300 shadow-elegant"
+              onClick={() => setIsOpen(false)}
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
       )}

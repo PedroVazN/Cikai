@@ -34,44 +34,44 @@ function Lancamentos() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-luxury-cream py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-light mb-4 text-gray-900 tracking-tight">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-primary-800 tracking-tight">
             Nossos Lançamentos
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
             Explore nossa seleção exclusiva de empreendimentos cuidadosamente escolhidos. 
             Cada projeto representa uma oportunidade única de encontrar o lar ideal.
           </p>
         </div>
 
         {/* Filtros */}
-        <div className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
-          <h2 className="text-lg font-medium mb-6 text-gray-900">
+        <div className="bg-white p-8 rounded-2xl shadow-elegant mb-12 border-elegant">
+          <h2 className="text-xl font-bold mb-8 text-primary-800">
             Filtros de Busca
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Bairro
               </label>
               <input
                 type="text"
                 value={filtros.bairro}
                 onChange={(e) => setFiltros({ ...filtros, bairro: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
                 placeholder="Digite o bairro"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Dormitórios
               </label>
               <select
                 value={filtros.dormitorios}
                 onChange={(e) => setFiltros({ ...filtros, dormitorios: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
               >
                 <option value="">Todos</option>
                 <option value="1">1</option>
@@ -81,14 +81,14 @@ function Lancamentos() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Preço Máximo
               </label>
               <input
                 type="number"
                 value={filtros.precoMax}
                 onChange={(e) => setFiltros({ ...filtros, precoMax: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
                 placeholder="R$ 0,00"
               />
             </div>
@@ -97,60 +97,61 @@ function Lancamentos() {
 
         {/* Lista de Empreendimentos */}
         {loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600">Carregando...</p>
+          <div className="text-center py-20">
+            <div className="inline-block animate-spin rounded-full h-14 w-14 border-3 border-primary-200 border-t-primary-700"></div>
+            <p className="text-gray-600 mt-6 font-medium">Carregando...</p>
           </div>
         ) : empreendimentos.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {empreendimentos.map((empreendimento) => (
               <Link
                 key={empreendimento._id}
                 to={`/lancamentos/${empreendimento._id}`}
-                className="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 border border-gray-200"
+                className="group bg-white rounded-2xl shadow-elegant overflow-hidden hover:shadow-elegant-lg transition-all duration-300 border-elegant card-hover"
               >
                 {empreendimento.imagens && empreendimento.imagens.length > 0 ? (
                   <img
                     src={normalizeImageUrl(empreendimento.imagens[0])}
                     alt={empreendimento.nome}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
                     onError={handleImageError}
                   />
                 ) : (
-                  <div className="w-full h-64 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                    <span className="text-gray-400 text-lg">Sem imagem</span>
+                  <div className="w-full h-72 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                    <span className="text-primary-400 text-lg font-medium">Sem imagem</span>
                   </div>
                 )}
-                <div className="p-6">
-                  <h3 className="text-xl font-medium mb-2 text-gray-900">
+                <div className="p-7">
+                  <h3 className="text-xl font-bold mb-3 text-primary-800 group-hover:text-primary-700 transition-colors">
                     {empreendimento.nome}
                   </h3>
-                  <div className="flex items-center text-gray-600 mb-4">
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center text-primary-600 mb-5 text-sm font-medium">
+                    <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span className="text-sm">{empreendimento.bairro}</span>
+                    <span>{empreendimento.bairro}</span>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-5">
                     {empreendimento.dormitorios && (
-                      <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-medium">
+                      <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
                         {empreendimento.dormitorios} quartos
                       </span>
                     )}
                     {empreendimento.suites && (
-                      <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-medium">
+                      <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
                         {empreendimento.suites} suítes
                       </span>
                     )}
                     {empreendimento.vagas && (
-                      <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-medium">
+                      <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
                         {empreendimento.vagas} vagas
                       </span>
                     )}
                   </div>
-                  <div className="pt-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">A partir de</p>
-                    <p className="text-2xl font-light text-gray-900">
+                  <div className="pt-5 border-t border-gray-200/60">
+                    <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">A partir de</p>
+                    <p className="text-3xl font-bold text-primary-800">
                       R$ {empreendimento.precoInicial?.toLocaleString('pt-BR')}
                     </p>
                   </div>
@@ -159,8 +160,8 @@ function Lancamentos() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
-            <p className="text-gray-600 text-lg">Nenhum lançamento encontrado com os filtros selecionados.</p>
+          <div className="text-center py-20 bg-white rounded-2xl shadow-elegant border-elegant">
+            <p className="text-gray-600 text-lg font-medium">Nenhum lançamento encontrado com os filtros selecionados.</p>
           </div>
         )}
       </div>

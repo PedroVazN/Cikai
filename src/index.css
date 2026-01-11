@@ -1,30 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-white text-gray-900;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    @apply bg-luxury-cream text-gray-900;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
   
   * {
-    @apply transition-colors duration-200;
+    @apply transition-all duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply bg-primary-700 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-800 transition-all duration-300 shadow-elegant hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
   }
   
   .btn-secondary {
-    @apply bg-white text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300;
+    @apply bg-white text-primary-700 border-2 border-primary-700 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 hover:border-primary-800 transition-all duration-300 shadow-sm hover:shadow-elegant;
+  }
+  
+  .btn-luxury {
+    @apply bg-gradient-to-r from-accent-500 to-accent-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-luxury hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
   }
   
   .card-hover {
-    @apply transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl;
+    @apply transition-all duration-300 transform hover:-translate-y-1 hover:shadow-elegant-lg;
+  }
+  
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-700 to-primary-600 bg-clip-text text-transparent;
+  }
+  
+  .border-elegant {
+    @apply border border-gray-200/60;
   }
 }
