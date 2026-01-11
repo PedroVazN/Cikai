@@ -12,13 +12,13 @@ function Navbar() {
   return (
     <nav className="bg-white/98 backdrop-blur-md shadow-elegant sticky top-0 z-50 border-b border-gray-200/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+        <div className="flex justify-between items-center h-16 md:h-20 lg:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img 
               src={logoImage} 
               alt="C.Ikai - Logo" 
-              className="h-18 md:h-24 object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 max-w-[200px] sm:max-w-[250px] md:max-w-none"
             />
           </Link>
 
