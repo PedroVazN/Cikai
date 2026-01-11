@@ -22,12 +22,21 @@ router.get('/', async (req, res) => {
       query.precoInicial = { $lte: parseFloat(precoMax) }
     }
 
-    let empreendimentos = await Empreendimento.find(query).sort({ criadoEm: -1 })
+    // Query otimizada com timeout e limite
+    let queryBuilder = Empreendimento.find(query)
+      .sort({ criadoEm: -1 })
+      .maxTimeMS(5000) // Timeout de 5 segundos para a query
+      .lean() // Retornar objetos JavaScript simples (mais rápido)
 
     if (destaque === 'true') {
-      // Lógica simples: pegar os mais recentes
-      empreendimentos = empreendimentos.slice(0, parseInt(limit) || 3)
+      const limitNum = parseInt(limit) || 3
+      queryBuilder = queryBuilder.limit(limitNum)
+    } else {
+      // Limite padrão para evitar retornar muitos dados
+      queryBuilder = queryBuilder.limit(100)
     }
+
+    const empreendimentos = await queryBuilder
 
     res.json(empreendimentos)
   } catch (error) {
@@ -39,6 +48,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const empreendimento = await Empreendimento.findById(req.params.id)
+      .maxTimeMS(5000)
+      .lean()
     if (!empreendimento) {
       return res.status(404).json({ message: 'Empreendimento não encontrado' })
     }
@@ -110,7 +121,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const empreendimento = await Empreendimento.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true }
+      { new: true, runValidators: true, maxTimeMS: 5000 }
     )
     
     if (!empreendimento) {
@@ -134,6 +145,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
     const empreendimento = await Empreendimento.findByIdAndDelete(req.params.id)
+      .maxTimeMS(5000)
     if (!empreendimento) {
       return res.status(404).json({ message: 'Empreendimento não encontrado' })
     }

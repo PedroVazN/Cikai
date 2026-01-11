@@ -28,6 +28,8 @@ router.get('/', authenticateToken, async (req, res) => {
     const leads = await Lead.find(query)
       .populate('empreendimentoId', 'nome')
       .sort({ criadoEm: -1 })
+      .maxTimeMS(5000)
+      .lean()
 
     res.json(leads)
   } catch (error) {
@@ -38,7 +40,10 @@ router.get('/', authenticateToken, async (req, res) => {
 // GET /api/leads/:id - Buscar por ID (admin)
 router.get('/:id', authenticateToken, async (req, res) => {
   try {
-    const lead = await Lead.findById(req.params.id).populate('empreendimentoId', 'nome')
+    const lead = await Lead.findById(req.params.id)
+      .populate('empreendimentoId', 'nome')
+      .maxTimeMS(5000)
+      .lean()
     if (!lead) {
       return res.status(404).json({ message: 'Lead não encontrado' })
     }

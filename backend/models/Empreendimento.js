@@ -65,10 +65,10 @@ const empreendimentoSchema = new mongoose.Schema(
   }
 )
 
-// Índices para busca
-empreendimentoSchema.index({ bairro: 1 })
-empreendimentoSchema.index({ ativo: 1 })
-empreendimentoSchema.index({ precoInicial: 1 })
+// Índices para busca otimizada
+empreendimentoSchema.index({ ativo: 1, criadoEm: -1 }) // Índice composto para listagem
+empreendimentoSchema.index({ bairro: 1, ativo: 1 }) // Índice composto para busca por bairro
+empreendimentoSchema.index({ precoInicial: 1, ativo: 1 }) // Índice composto para filtro de preço
 
 const Empreendimento = mongoose.model('Empreendimento', empreendimentoSchema)
 

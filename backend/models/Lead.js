@@ -31,9 +31,9 @@ const leadSchema = new mongoose.Schema(
   }
 )
 
-// Índices
-leadSchema.index({ empreendimentoId: 1 })
-leadSchema.index({ criadoEm: -1 })
+// Índices otimizados
+leadSchema.index({ empreendimentoId: 1, criadoEm: -1 }) // Índice composto para busca por empreendimento
+leadSchema.index({ criadoEm: -1 }) // Índice para ordenação
 
 const Lead = mongoose.model('Lead', leadSchema)
 
