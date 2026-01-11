@@ -170,15 +170,16 @@ app.use(async (req, res, next) => {
   
   try {
     // Verificar estado da conexão
-    const connectionState = mongoose.connection.readyState
+    let connectionState = mongoose.connection.readyState
     
     // 0 = desconectado, 1 = conectado, 2 = conectando, 3 = desconectando
     if (connectionState !== 1) {
-      // Se não está conectado, tentar conectar
+      // Se não está conectado, tentar conectar e AGUARDAR
       if (connectionState === 0 || connectionState === 3) {
         console.log('Tentando conectar ao MongoDB...')
         try {
-          await connectDB()
+          await connectDB() // AGUARDAR conexão completar
+          connectionState = mongoose.connection.readyState
         } catch (connectError) {
           console.error('Erro ao conectar:', connectError.message)
           return res.status(500).json({ 
@@ -190,28 +191,50 @@ app.use(async (req, res, next) => {
         }
       }
       
-      // Se ainda está conectando, aguardar um pouco
+      // Se ainda está conectando, aguardar até completar
       if (connectionState === 2) {
-        // Aguardar até 3 segundos para conexão completar
+        console.log('Aguardando conexão MongoDB completar...')
+        // Aguardar até 10 segundos para conexão completar
         let waited = 0
-        while (mongoose.connection.readyState !== 1 && waited < 3000) {
-          await new Promise(resolve => setTimeout(resolve, 100))
-          waited += 100
+        while (mongoose.connection.readyState !== 1 && waited < 10000) {
+          await new Promise(resolve => setTimeout(resolve, 200))
+          waited += 200
+          connectionState = mongoose.connection.readyState
+          
+          // Se mudou para desconectado, tentar conectar novamente
+          if (connectionState === 0) {
+            try {
+              await connectDB()
+            } catch (e) {
+              // Ignorar erro, continuar aguardando
+            }
+          }
         }
       }
       
-      // Verificar novamente após tentativa
-      if (mongoose.connection.readyState !== 1) {
+      // Verificar novamente após todas as tentativas
+      connectionState = mongoose.connection.readyState
+      if (connectionState !== 1) {
+        console.error('MongoDB não conectado após tentativas. Estado:', connectionState)
         return res.status(500).json({ 
           error: 'Erro de conexão com o banco de dados',
           message: 'MongoDB não está conectado. Tente novamente em alguns instantes.',
-          connectionState: mongoose.connection.readyState,
+          connectionState: connectionState,
           hasMongoUri: !!process.env.MONGODB_URI
         })
       }
     }
     
-    next()
+    // Garantir que está realmente conectado antes de prosseguir
+    if (mongoose.connection.readyState === 1) {
+      next()
+    } else {
+      return res.status(500).json({ 
+        error: 'Erro de conexão com o banco de dados',
+        message: 'Conexão MongoDB não está pronta.',
+        connectionState: mongoose.connection.readyState
+      })
+    }
   } catch (error) {
     console.error('Erro no middleware de conexão:', error)
     
