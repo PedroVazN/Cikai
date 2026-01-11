@@ -32,16 +32,12 @@ router.get('/', async (req, res) => {
       query.precoInicial = { $lte: parseFloat(precoMax) }
     }
 
-    // Query simples e rápida
-    let queryBuilder = Empreendimento.find(query).sort({ criadoEm: -1 })
+    // Query simples
+    let empreendimentos = await Empreendimento.find(query).sort({ criadoEm: -1 })
 
     if (destaque === 'true') {
-      queryBuilder = queryBuilder.limit(parseInt(limit) || 3)
-    } else {
-      queryBuilder = queryBuilder.limit(100)
+      empreendimentos = empreendimentos.slice(0, parseInt(limit) || 3)
     }
-
-    const empreendimentos = await queryBuilder
 
     res.json(empreendimentos)
   } catch (error) {
