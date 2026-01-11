@@ -48,15 +48,19 @@ router.get('/', async (req, res) => {
 // GET /api/empreendimentos/:id - Buscar por ID (público)
 router.get('/:id', async (req, res) => {
   try {
+    await ensureConnection()
     const empreendimento = await Empreendimento.findById(req.params.id)
-      .maxTimeMS(5000)
-      .lean()
+    
     if (!empreendimento) {
       return res.status(404).json({ message: 'Empreendimento não encontrado' })
     }
+    
     res.json(empreendimento)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    console.error('Erro ao buscar empreendimento:', error)
+    res.status(500).json({ 
+      message: error.message || 'Erro ao buscar empreendimento'
+    })
   }
 })
 
