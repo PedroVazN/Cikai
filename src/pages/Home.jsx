@@ -31,7 +31,7 @@ function Home() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section Moderno */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50">
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 pt-8">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -40,7 +40,7 @@ function Home() {
           }}></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 md:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Conteúdo */}
             <div className="text-center lg:text-left space-y-8">
@@ -120,12 +120,14 @@ function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-3xl p-8 md:p-12">
-                <ImageCarousel 
-                  images={[cliente1, cliente2, cliente3]} 
-                  autoPlay={true}
-                  interval={4000}
-                />
+              <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-3xl p-4 md:p-8 overflow-hidden">
+                <div className="h-[400px] md:h-[500px]">
+                  <ImageCarousel 
+                    images={[cliente1, cliente2, cliente3]} 
+                    autoPlay={true}
+                    interval={4000}
+                  />
+                </div>
               </div>
             </div>
             
