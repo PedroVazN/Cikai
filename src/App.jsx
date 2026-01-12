@@ -6,6 +6,7 @@ import Lancamentos from './pages/Lancamentos'
 import LancamentoDetalhe from './pages/LancamentoDetalhe'
 import Contato from './pages/Contato'
 import AgendarVisita from './pages/AgendarVisita'
+import ComoComprar from './pages/ComoComprar'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminEmpreendimentos from './admin/AdminEmpreendimentos'
@@ -23,6 +24,7 @@ function App() {
           <Route path="lancamentos" element={<Lancamentos />} />
           <Route path="lancamentos/:id" element={<LancamentoDetalhe />} />
           <Route path="contato" element={<Contato />} />
+          <Route path="como-comprar" element={<ComoComprar />} />
           <Route path="agendar-visita/:id" element={<AgendarVisita />} />
         </Route>
 

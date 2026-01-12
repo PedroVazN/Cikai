@@ -57,6 +57,16 @@ function Navbar() {
             >
               Lançamentos
             </Link>
+            <Link
+              to="/como-comprar"
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                isActive('/como-comprar')
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
+              }`}
+            >
+              Como Comprar
+            </Link>
             <a
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
