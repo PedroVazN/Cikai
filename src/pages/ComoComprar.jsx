@@ -110,19 +110,31 @@ function ComoComprar() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {/* HIS1 - Habitação de Interesse Social Faixa 1 */}
+            {/* HIS-1 - Habitação de Interesse Social Faixa 1 */}
             <div className="bg-white rounded-2xl p-8 shadow-elegant border border-gray-100 hover:shadow-elegant-lg transition-all duration-300">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                  HIS1
+                  HIS-1
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Habitação de Interesse Social - Faixa 1</h3>
+                <h3 className="text-2xl font-bold text-gray-900">Habitação de Interesse Social – Faixa 1</h3>
               </div>
               
               <div className="space-y-4 mb-6">
-                <div className="p-4 bg-primary-50 rounded-lg">
-                  <p className="text-sm font-semibold text-primary-700 mb-1">Teto de Renda Familiar (2026)</p>
-                  <p className="text-2xl font-bold text-primary-800">Até R$ 2.400,00</p>
+                <div className="p-4 bg-primary-50 rounded-lg space-y-2">
+                  <div>
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Renda Familiar Máxima (2026)</p>
+                    <p className="text-xl font-bold text-primary-800">Até R$ 4.863,00</p>
+                    <p className="text-xs text-primary-600 mt-1">ou R$ 810,50 per capita</p>
+                  </div>
+                  <div className="pt-2 border-t border-primary-200">
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Valor Máximo de Venda</p>
+                    <p className="text-lg font-bold text-primary-800">R$ 276.102,20</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-4">
+                  <p className="text-sm font-semibold text-gray-900">Quem pode se beneficiar:</p>
+                  <p className="text-sm text-gray-600">Famílias de baixa renda, até 3 salários mínimos, buscando moradia com preço controlado.</p>
                 </div>
                 
                 <div className="space-y-3">
@@ -130,43 +142,43 @@ function ComoComprar() {
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm"><strong>Subsídio de até 90%</strong> do valor do imóvel</p>
+                    <p className="text-gray-700 text-sm">Moradia com <strong>preço reduzido</strong> e enquadrada em política pública local</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm">Taxa de juros <strong>reduzida</strong></p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Prazo de <strong>até 30 anos</strong> para pagamento</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Uso do <strong>FGTS</strong> na entrada e nas parcelas</p>
+                    <p className="text-gray-700 text-sm">Possibilidade de acesso a <strong>financiamento social</strong> e programas habitacionais</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* HIS2 - Habitação de Interesse Social Faixa 2 */}
+            {/* HIS-2 - Habitação de Interesse Social Faixa 2 */}
             <div className="bg-white rounded-2xl p-8 shadow-elegant border border-gray-100 hover:shadow-elegant-lg transition-all duration-300">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                  HIS2
+                  HIS-2
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Habitação de Interesse Social - Faixa 2</h3>
+                <h3 className="text-2xl font-bold text-gray-900">Habitação de Interesse Social – Faixa 2</h3>
               </div>
               
               <div className="space-y-4 mb-6">
-                <div className="p-4 bg-primary-50 rounded-lg">
-                  <p className="text-sm font-semibold text-primary-700 mb-1">Teto de Renda Familiar (2026)</p>
-                  <p className="text-2xl font-bold text-primary-800">R$ 2.400,01 a R$ 4.000,00</p>
+                <div className="p-4 bg-primary-50 rounded-lg space-y-2">
+                  <div>
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Renda Familiar Máxima (2026)</p>
+                    <p className="text-xl font-bold text-primary-800">Até R$ 9.726,00</p>
+                    <p className="text-xs text-primary-600 mt-1">ou R$ 1.621,00 per capita</p>
+                  </div>
+                  <div className="pt-2 border-t border-primary-200">
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Valor Máximo de Venda</p>
+                    <p className="text-lg font-bold text-primary-800">R$ 383.636,74</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-4">
+                  <p className="text-sm font-semibold text-gray-900">Quem pode se beneficiar:</p>
+                  <p className="text-sm text-gray-600">Famílias com renda intermediária (até 6 salários mínimos).</p>
                 </div>
                 
                 <div className="space-y-3">
@@ -174,25 +186,13 @@ function ComoComprar() {
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm"><strong>Subsídio de até 75%</strong> do valor do imóvel</p>
+                    <p className="text-gray-700 text-sm">Acesso à moradia com <strong>preço mais acessível</strong> que o mercado convencional</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm">Taxa de juros <strong>preferencial</strong></p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Prazo de <strong>até 30 anos</strong> para pagamento</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Uso do <strong>FGTS</strong> facilitado</p>
+                    <p className="text-gray-700 text-sm">Enquadramento em <strong>regras de habitação social</strong> municipal</p>
                   </div>
                 </div>
               </div>
@@ -208,9 +208,21 @@ function ComoComprar() {
               </div>
               
               <div className="space-y-4 mb-6">
-                <div className="p-4 bg-primary-50 rounded-lg">
-                  <p className="text-sm font-semibold text-primary-700 mb-1">Teto de Renda Familiar (2026)</p>
-                  <p className="text-2xl font-bold text-primary-800">R$ 4.000,01 a R$ 7.000,00</p>
+                <div className="p-4 bg-primary-50 rounded-lg space-y-2">
+                  <div>
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Renda Familiar Máxima (2026)</p>
+                    <p className="text-xl font-bold text-primary-800">Até R$ 16.210,00</p>
+                    <p className="text-xs text-primary-600 mt-1">ou R$ 2.431,50 per capita</p>
+                  </div>
+                  <div className="pt-2 border-t border-primary-200">
+                    <p className="text-xs font-semibold text-primary-700 mb-1">Valor Máximo de Venda</p>
+                    <p className="text-lg font-bold text-primary-800">R$ 537.672,71</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-4">
+                  <p className="text-sm font-semibold text-gray-900">Quem pode se beneficiar:</p>
+                  <p className="text-sm text-gray-600">Famílias com renda média (até ~10 salários mínimos).</p>
                 </div>
                 
                 <div className="space-y-3">
@@ -218,72 +230,106 @@ function ComoComprar() {
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm"><strong>Subsídio de até 50%</strong> do valor do imóvel</p>
+                    <p className="text-gray-700 text-sm">Imóveis com <strong>preço controlado</strong>, porém faixa de renda mais ampla que HIS</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm">Taxa de juros <strong>competitiva</strong></p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Prazo de <strong>até 30 anos</strong> para pagamento</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Financiamento <strong>SBPE</strong> disponível</p>
+                    <p className="text-gray-700 text-sm">Destinado a atender famílias de <strong>renda média</strong> que ainda precisam de acesso facilitado à casa própria</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* RV2 - Residencial Verde Faixa 2 */}
+            {/* R2V - Residencial 2 Vertical */}
             <div className="bg-white rounded-2xl p-8 shadow-elegant border border-gray-100 hover:shadow-elegant-lg transition-all duration-300">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                  RV2
+                <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                  R2V
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Residencial Verde - Faixa 2</h3>
+                <h3 className="text-2xl font-bold text-gray-900">Residencial 2 Vertical</h3>
               </div>
               
               <div className="space-y-4 mb-6">
-                <div className="p-4 bg-primary-50 rounded-lg">
-                  <p className="text-sm font-semibold text-primary-700 mb-1">Teto de Renda Familiar (2026)</p>
-                  <p className="text-2xl font-bold text-primary-800">R$ 4.000,01 a R$ 7.000,00</p>
+                <div className="p-4 bg-gray-50 rounded-lg space-y-2">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-700 mb-1">Renda Familiar</p>
+                    <p className="text-xl font-bold text-gray-800">Sem limite</p>
+                  </div>
+                  <div className="pt-2 border-t border-gray-200">
+                    <p className="text-xs font-semibold text-gray-700 mb-1">Valor de Venda</p>
+                    <p className="text-lg font-bold text-gray-800">Livre (sem limite)</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-4">
+                  <p className="text-sm font-semibold text-gray-900">O que é:</p>
+                  <p className="text-sm text-gray-600">Categoria urbanística para prédios com mais liberdade de mercado — geralmente sem restrições de renda e condição de moradia social obrigatória.</p>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-gray-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm"><strong>Subsídio de até 50%</strong> do valor do imóvel</p>
+                    <p className="text-gray-700 text-sm">Pode ser comprado por <strong>qualquer pessoa</strong>, seja para moradia ou para investimento/locação</p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-gray-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p className="text-gray-700 text-sm">Foco em <strong>sustentabilidade</strong> e eficiência energética</p>
+                    <p className="text-gray-700 text-sm">Normalmente não tem os mesmos <strong>limites rígidos</strong> de preço e uso que as unidades HIS/HMP</p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Prazo de <strong>até 30 anos</strong> para pagamento</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-700 text-sm">Benefícios <strong>ambientais</strong> e redução de custos</p>
+                  <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-xs text-yellow-800 font-semibold">⚠️ Importante:</p>
+                    <p className="text-xs text-yellow-700 mt-1">Embora seja parte de empreendimentos que também incluem HIS/HMP, o R2V é considerado mercado livre, sem restrições de limitação social.</p>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Tabela Resumo */}
+          <div className="bg-white rounded-2xl p-8 shadow-elegant border border-gray-100 overflow-x-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Resumo dos Tetos de Renda (SP – 2026)</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[600px]">
+                <thead>
+                  <tr className="bg-primary-50 border-b-2 border-primary-200">
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-900">Categoria</th>
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-900">Renda Familiar Máxima</th>
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-900">Renda Per Capita</th>
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-900">Valor Máx. de Venda</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  <tr className="hover:bg-primary-50/50 transition-colors">
+                    <td className="px-4 py-4 font-bold text-primary-700">HIS-1</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 4.863,00</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 810,50</td>
+                    <td className="px-4 py-4 font-semibold text-gray-900">R$ 276.102,20</td>
+                  </tr>
+                  <tr className="hover:bg-primary-50/50 transition-colors">
+                    <td className="px-4 py-4 font-bold text-primary-700">HIS-2</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 9.726,00</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 1.621,00</td>
+                    <td className="px-4 py-4 font-semibold text-gray-900">R$ 383.636,74</td>
+                  </tr>
+                  <tr className="hover:bg-primary-50/50 transition-colors">
+                    <td className="px-4 py-4 font-bold text-primary-700">HMP</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 16.210,00</td>
+                    <td className="px-4 py-4 text-gray-700">R$ 2.431,50</td>
+                    <td className="px-4 py-4 font-semibold text-gray-900">R$ 537.672,71</td>
+                  </tr>
+                  <tr className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-4 font-bold text-gray-700">R2V</td>
+                    <td className="px-4 py-4 text-gray-700">Sem limite</td>
+                    <td className="px-4 py-4 text-gray-700">—</td>
+                    <td className="px-4 py-4 font-semibold text-gray-900">Livre (sem limite)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
