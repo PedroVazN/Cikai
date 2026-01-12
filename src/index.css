@@ -12,7 +12,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     letter-spacing: -0.01em;
-    background: linear-gradient(to bottom, #faf8f6 0%, #ffffff 100%);
+    background: linear-gradient(to bottom, #fdf2f8 0%, #ffffff 100%);
   }
   
   * {
@@ -27,15 +27,15 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-700 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-800 transition-all duration-300 shadow-elegant hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
+    @apply bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-700 transition-all duration-300 shadow-elegant hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
   }
   
   .btn-secondary {
-    @apply bg-white text-primary-700 border-2 border-primary-300 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 hover:border-primary-600 transition-all duration-300 shadow-sm hover:shadow-elegant;
+    @apply bg-white text-primary-600 border-2 border-primary-200 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 hover:border-primary-400 transition-all duration-300 shadow-sm hover:shadow-elegant;
   }
   
   .btn-luxury {
-    @apply bg-gradient-to-r from-primary-700 to-primary-800 text-white px-8 py-4 rounded-lg font-semibold hover:from-primary-800 hover:to-primary-900 transition-all duration-300 shadow-luxury hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-luxury hover:shadow-elegant-lg transform hover:scale-[1.02] active:scale-[0.98];
   }
   
   .card-hover {
@@ -47,7 +47,7 @@
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-primary-700 to-primary-800 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent;
   }
   
   .border-elegant {
