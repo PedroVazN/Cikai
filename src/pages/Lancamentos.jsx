@@ -10,7 +10,6 @@ function Lancamentos() {
   const [filtros, setFiltros] = useState({
     bairro: '',
     dormitorios: '',
-    precoMax: '',
   })
 
   // Buscar bairros disponíveis ao carregar
@@ -46,7 +45,6 @@ function Lancamentos() {
       const params = new URLSearchParams()
       if (filtros.bairro) params.append('bairro', filtros.bairro)
       if (filtros.dormitorios) params.append('dormitorios', filtros.dormitorios)
-      if (filtros.precoMax) params.append('precoMax', filtros.precoMax)
 
       const response = await api.get(`/empreendimentos?${params.toString()}`)
       setEmpreendimentos(response.data)
@@ -110,18 +108,6 @@ function Lancamentos() {
                 <option value="3">3</option>
                 <option value="4+">4+</option>
               </select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Preço Máximo
-              </label>
-              <input
-                type="number"
-                value={filtros.precoMax}
-                onChange={(e) => setFiltros({ ...filtros, precoMax: e.target.value })}
-                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
-                placeholder="R$ 0,00"
-              />
             </div>
           </div>
         </div>
@@ -225,10 +211,11 @@ function Lancamentos() {
                     </div>
                   </div>
                   <div className="pt-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">A partir de</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Preço</p>
                     <p className="text-2xl font-bold text-primary-700">
-                      R$ {empreendimento.precoInicial?.toLocaleString('pt-BR')}
+                      Sob Consulta
                     </p>
+                    <p className="text-xs text-primary-600 font-medium mt-1">Fale conosco!</p>
                   </div>
                 </div>
               </Link>

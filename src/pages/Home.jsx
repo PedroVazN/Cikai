@@ -143,7 +143,7 @@ function Home() {
               
               <p className="text-lg text-gray-600 leading-relaxed">
                 Com mais de <strong className="text-primary-700">5 anos de experiência</strong> no mercado imobiliário, 
-                especializada em lançamentos de alto padrão em <strong className="text-primary-700">São Paulo e ABC</strong>.
+                realizamos uma pesquisa detalhada do empreendimento que atenda às suas necessidades dentro da sua realidade financeira em <strong className="text-primary-700">São Paulo e ABC</strong>.
               </p>
               
               <p className="text-lg text-gray-600 leading-relaxed">
@@ -235,10 +235,11 @@ function Home() {
                   <div className="p-6 bg-gradient-to-br from-white to-gray-50">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">A partir de</p>
-                        <p className="text-3xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
-                          R$ {empreendimento.precoInicial?.toLocaleString('pt-BR')}
+                        <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Preço</p>
+                        <p className="text-2xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+                          Sob Consulta
                         </p>
+                        <p className="text-xs text-primary-600 font-medium mt-1">Fale conosco!</p>
                       </div>
                       <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary-100 to-accent-100 rounded-xl group-hover:scale-110 transition-transform duration-300">
                         <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

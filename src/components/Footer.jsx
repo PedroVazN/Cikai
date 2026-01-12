@@ -17,7 +17,7 @@ function Footer() {
               />
             </div>
             <p className="text-gray-400 leading-relaxed text-sm">
-              Corretora especializada em lançamentos imobiliários com mais de 5 anos de experiência. 
+              Corretora com mais de 5 anos de experiência. Realizamos uma pesquisa detalhada do empreendimento que atenda às suas necessidades dentro da sua realidade financeira. 
               Transformamos o sonho da casa própria em realidade.
             </p>
             <p className="text-primary-400 text-sm font-semibold">

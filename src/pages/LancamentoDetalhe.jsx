@@ -257,11 +257,12 @@ function LancamentoDetalhe() {
             <div className="bg-white rounded-2xl shadow-elegant-lg p-10 sticky top-28 border-elegant">
               <h2 className="text-3xl font-bold mb-8 text-primary-800">Informações</h2>
               <div className="mb-10 p-8 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
-                <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Preço Inicial</p>
-                <p className="text-4xl font-bold text-primary-800 mb-2">
-                  R$ {empreendimento.precoInicial?.toLocaleString('pt-BR')}
+                <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Preço</p>
+                <p className="text-3xl font-bold text-primary-800 mb-2">
+                  Sob Consulta
                 </p>
-                <p className="text-xs text-gray-600 font-medium">Consulte condições especiais</p>
+                <p className="text-sm text-primary-600 font-semibold mt-2">Fale conosco!</p>
+                <p className="text-xs text-gray-600 font-medium mt-2">Preços negociáveis</p>
               </div>
 
               <div className="space-y-4">
@@ -283,7 +284,7 @@ function LancamentoDetalhe() {
                 <p className="text-xs text-gray-600 text-center uppercase tracking-wider">
                   <span className="font-bold text-primary-800">C.Ikai</span>
                   <br />
-                  <span className="font-medium">Corretora especializada em lançamentos</span>
+                  <span className="font-medium">Pesquisa personalizada de empreendimentos</span>
                   <br />
                   <span className="text-xs text-accent-500 font-semibold">CRECI SP 282.069</span>
                 </p>

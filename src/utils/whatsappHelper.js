@@ -2,7 +2,7 @@
  * Helper para geração de links e mensagens do WhatsApp
  */
 
-const WHATSAPP_NUMBER = '5511991095184' // +55 11 99109-5184 (sem espaços e caracteres especiais)
+const WHATSAPP_NUMBER = '5511913667831' // +55 11 91366-7831 (sem espaços e caracteres especiais)
 
 /**
  * Gera um link do WhatsApp com mensagem personalizada
@@ -45,7 +45,7 @@ export const generateContatoMessage = () => {
  * @returns {string} Número formatado
  */
 export const getWhatsAppNumber = () => {
-  return '+55 11 99109-5184'
+  return '+55 11 91366-7831'
 }
 
 /**
