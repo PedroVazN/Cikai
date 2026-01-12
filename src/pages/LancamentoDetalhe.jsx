@@ -190,8 +190,8 @@ function LancamentoDetalhe() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {empreendimento.areasLazer.map((area, index) => (
-                    <div key={index} className="flex items-center p-5 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
-                      <svg className="w-5 h-5 text-accent-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div key={index} className="flex items-center p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
+                      <svg className="w-5 h-5 text-gray-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span className="text-gray-700 font-medium">{area}</span>
@@ -208,8 +208,8 @@ function LancamentoDetalhe() {
                   Localização
                 </h2>
                 {empreendimento.endereco && (
-                  <div className="flex items-start mb-6 p-5 bg-primary-50/50 rounded-xl border border-primary-200/50">
-                    <svg className="w-6 h-6 text-accent-500 mr-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-start mb-6 p-5 bg-gray-50/50 rounded-xl border border-gray-200/50">
+                    <svg className="w-6 h-6 text-gray-600 mr-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -238,7 +238,7 @@ function LancamentoDetalhe() {
                   href={empreendimento.googleMapsUrl || generateGoogleMapsUrl(empreendimento.endereco)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary-700 hover:text-primary-800 font-semibold group transition-colors"
+                  className="inline-flex items-center text-gray-700 hover:text-gray-900 font-semibold group transition-colors"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -282,11 +282,11 @@ function LancamentoDetalhe() {
               
               <div className="mt-10 pt-8 border-t border-gray-200/60">
                 <p className="text-xs text-gray-600 text-center uppercase tracking-wider">
-                  <span className="font-bold text-primary-800">C.Ikai</span>
+                  <span className="font-bold text-gray-800">C.Ikai</span>
                   <br />
                   <span className="font-medium">Pesquisa personalizada de empreendimentos</span>
                   <br />
-                  <span className="text-xs text-accent-500 font-semibold">CRECI SP 282.069</span>
+                  <span className="text-xs text-gray-600 font-semibold">CRECI SP 282.069</span>
                 </p>
               </div>
             </div>
