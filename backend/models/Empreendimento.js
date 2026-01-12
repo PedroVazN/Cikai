@@ -65,6 +65,10 @@ const empreendimentoSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    videoYoutube: {
+      type: String,
+      trim: true,
+    },
     ativo: {
       type: Boolean,
       default: true,

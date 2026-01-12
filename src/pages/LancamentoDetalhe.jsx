@@ -4,6 +4,7 @@ import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 import { generateGoogleMapsEmbedUrl, generateGoogleMapsUrl } from '../utils/mapHelper'
 import { generateWhatsAppLink, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
+import { getYouTubeEmbedUrl } from '../utils/youtubeHelper'
 import ImageGallery from '../components/ImageGallery'
 
 function LancamentoDetalhe() {
@@ -100,6 +101,25 @@ function LancamentoDetalhe() {
                 images={empreendimento.imagens} 
                 title="Galeria de Fotos"
               />
+            )}
+
+            {/* Vídeo do YouTube */}
+            {empreendimento.videoYoutube && getYouTubeEmbedUrl(empreendimento.videoYoutube) && (
+              <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
+                <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
+                  Vídeo do Empreendimento
+                </h2>
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-xl"
+                    src={getYouTubeEmbedUrl(empreendimento.videoYoutube)}
+                    title="Vídeo do Empreendimento"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
             )}
 
             {/* Descrição */}
