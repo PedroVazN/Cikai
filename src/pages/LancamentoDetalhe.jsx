@@ -156,27 +156,27 @@ function LancamentoDetalhe() {
                   </p>
                 </div>
                 {empreendimento.vagasCarro && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas de Carro</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.vagasCarro}</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.vagasCarro}</p>
                   </div>
                 )}
                 {empreendimento.vagasMoto && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas de Moto</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.vagasMoto}</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.vagasMoto}</p>
                   </div>
                 )}
                 {empreendimento.vagas && !empreendimento.vagasCarro && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Vagas</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.vagas}</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.vagas}</p>
                   </div>
                 )}
                 {empreendimento.construtora && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Construtora</p>
-                    <p className="text-xl font-bold text-primary-800">{empreendimento.construtora}</p>
+                    <p className="text-xl font-bold text-gray-800">{empreendimento.construtora}</p>
                   </div>
                 )}
               </div>
