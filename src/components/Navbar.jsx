@@ -122,12 +122,23 @@ function Navbar() {
             to="/lancamentos"
             className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
               isActive('/lancamentos')
-                ? 'text-gray-800 bg-gray-100'
-                : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
+                ? 'text-primary-700 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
             }`}
             onClick={() => setIsOpen(false)}
           >
             Lançamentos
+          </Link>
+          <Link
+            to="/como-comprar"
+            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+              isActive('/como-comprar')
+                ? 'text-primary-700 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            Como Comprar
           </Link>
           <a
             href={generateWhatsAppLink(generateContatoMessage())}
