@@ -122,7 +122,7 @@ function LancamentoDetalhe() {
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Metragens Disponíveis</p>
                     <div className="flex flex-wrap gap-2">
                       {empreendimento.metragens.map((metragem, idx) => (
-                        <span key={idx} className="px-4 py-2 bg-white text-accent-700 rounded-lg font-bold text-lg border border-accent-200 shadow-sm">
+                        <span key={idx} className="px-4 py-2 bg-white text-accent-800 rounded-lg font-bold text-lg border border-accent-300 shadow-sm">
                           {metragem}m²
                         </span>
                       ))}
