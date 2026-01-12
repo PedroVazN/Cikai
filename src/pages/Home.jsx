@@ -31,7 +31,7 @@ function Home() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section Moderno */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 pt-8">
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 pt-24 md:pt-28">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -40,7 +40,7 @@ function Home() {
           }}></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 md:py-12">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Conteúdo */}
             <div className="text-center lg:text-left space-y-8">
