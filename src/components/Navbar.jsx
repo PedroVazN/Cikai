@@ -1,45 +1,58 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logoImage from '../imgs/Celia.png'
 import { generateWhatsAppLink, generateContatoMessage } from '../utils/whatsappHelper'
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const isActive = (path) => location.pathname === path
 
   return (
-    <nav className="bg-white/98 backdrop-blur-md shadow-elegant sticky top-0 z-50 border-b border-gray-200/50">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100' 
+        : 'bg-white/80 backdrop-blur-md'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20 lg:h-24">
+        <div className="flex justify-between items-center h-20 lg:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img 
               src={logoImage} 
               alt="C.Ikai - Logo" 
-              className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 max-w-[200px] sm:max-w-[250px] md:max-w-none"
+              className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center gap-2">
             <Link
               to="/"
-              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 isActive('/')
-                  ? 'text-primary-700 bg-primary-50 shadow-sm'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
               }`}
             >
               Home
             </Link>
             <Link
               to="/lancamentos"
-              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 isActive('/lancamentos')
-                  ? 'text-primary-700 bg-primary-50 shadow-sm'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
               }`}
             >
               Lançamentos
@@ -48,7 +61,7 @@ function Navbar() {
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 bg-gradient-to-r from-primary-700 to-primary-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:from-primary-800 hover:to-primary-900 transition-all duration-300 shadow-elegant hover:shadow-elegant-lg transform hover:scale-105"
+              className="ml-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg text-sm font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
             >
               WhatsApp
             </a>
@@ -56,8 +69,9 @@ function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-600"
+            className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Menu"
           >
             <svg
               className="h-6 w-6"
@@ -79,43 +93,43 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden border-t border-gray-200/50 bg-white/98 backdrop-blur-md">
-          <div className="px-4 pt-4 pb-4 space-y-2">
-            <Link
-              to="/"
-              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
-                isActive('/')
-                  ? 'text-primary-700 bg-primary-50 shadow-sm'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/lancamentos"
-              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
-                isActive('/lancamentos')
-                  ? 'text-primary-700 bg-primary-50 shadow-sm'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50/80'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              Lançamentos
-            </Link>
-            <a
-              href={generateWhatsAppLink(generateContatoMessage())}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-primary-700 to-primary-800 text-white hover:from-primary-800 hover:to-primary-900 transition-all duration-300 shadow-elegant"
-              onClick={() => setIsOpen(false)}
-            >
-              WhatsApp
-            </a>
-          </div>
+      <div className={`md:hidden transition-all duration-300 overflow-hidden ${
+        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="px-4 pb-4 space-y-2 bg-white border-t border-gray-100">
+          <Link
+            to="/"
+            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+              isActive('/')
+                ? 'text-primary-700 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/lancamentos"
+            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+              isActive('/lancamentos')
+                ? 'text-primary-700 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            Lançamentos
+          </Link>
+          <a
+            href={generateWhatsAppLink(generateContatoMessage())}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg"
+            onClick={() => setIsOpen(false)}
+          >
+            WhatsApp
+          </a>
         </div>
-      )}
+      </div>
     </nav>
   )
 }
