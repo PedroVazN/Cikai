@@ -12,6 +12,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     letter-spacing: -0.01em;
+    background: linear-gradient(to bottom, #fdf2f8 0%, #ffffff 100%);
   }
   
   * {

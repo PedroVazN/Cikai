@@ -53,13 +53,13 @@ function Home() {
             <div className="max-w-3xl">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight text-white drop-shadow-2xl">
                 Parcelas Menores que o
-                <span className="block mt-3 text-accent-400">Seu Aluguel</span>
+                <span className="block mt-3 text-accent-300">Seu Aluguel</span>
               </h1>
               <p className="text-2xl md:text-3xl lg:text-4xl mb-5 text-white font-medium leading-tight drop-shadow-lg">
                 No apartamento dos seus sonhos
               </p>
               <p className="text-lg md:text-xl lg:text-2xl mb-10 text-white/95 leading-relaxed font-medium">
-                Nas melhores regiões de <span className="text-accent-400 font-bold">São Paulo e ABC</span>
+                Nas melhores regiões de <span className="text-accent-300 font-bold">São Paulo e ABC</span>
               </p>
               <div className="flex flex-col sm:flex-row gap-5">
                 <Link 
@@ -71,19 +71,19 @@ function Home() {
               </div>
               <p className="mt-8 text-white/90 text-base md:text-lg flex flex-wrap gap-4 items-center">
                 <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-accent-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Mais de 500 clientes atendidos
                 </span>
                 <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-accent-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   50+ famílias ajudadas
                 </span>
                 <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-accent-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   5+ anos de experiência
@@ -103,7 +103,7 @@ function Home() {
                 C.Ikai
               </h2>
               <p className="text-xl text-primary-700 mb-3 font-medium">Corretora Especializada em Lançamentos</p>
-              <p className="text-sm text-accent-600 mb-8 font-semibold tracking-wide uppercase">CRECI SP 282.069</p>
+              <p className="text-sm text-accent-500 mb-8 font-semibold tracking-wide uppercase">CRECI SP 282.069</p>
               <div className="space-y-5 text-gray-700 leading-relaxed mb-10 text-base">
                 <p>
                   Com mais de <strong className="text-primary-800">5 anos de experiência</strong> no mercado imobiliário, especializada em lançamentos de alto padrão em <strong className="text-primary-800">São Paulo e ABC</strong>, nos melhores bairros.
@@ -129,7 +129,7 @@ function Home() {
               </div>
               <div className="mt-10">
                 <div className="flex items-center text-primary-700 bg-primary-50/50 px-5 py-3 rounded-lg border border-primary-200/50 w-fit">
-                  <svg className="w-5 h-5 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 mr-3 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
@@ -204,7 +204,7 @@ function Home() {
                       {empreendimento.nome}
                     </h3>
                     <div className="flex items-center text-primary-600 mb-5 text-sm font-medium">
-                      <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 mr-2 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -238,19 +238,19 @@ function Home() {
       </section>
 
       {/* Estatísticas */}
-      <section className="py-16 md:py-20 lg:py-28 bg-gradient-to-br from-luxury-dark via-primary-900 to-luxury-navy text-white">
+      <section className="py-16 md:py-20 lg:py-28 bg-gradient-to-br from-luxury-dark via-primary-800 to-primary-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 md:gap-12 lg:gap-16">
             <div className="text-center px-4">
-              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">5+</div>
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-300">5+</div>
               <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Anos de Experiência</div>
             </div>
             <div className="text-center px-4">
-              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">500+</div>
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-300">500+</div>
               <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Clientes Atendidos</div>
             </div>
             <div className="text-center px-4">
-              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-400">50+</div>
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-accent-300">50+</div>
               <div className="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-semibold leading-tight">Famílias Ajudadas</div>
             </div>
           </div>

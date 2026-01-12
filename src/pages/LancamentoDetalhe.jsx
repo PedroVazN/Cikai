@@ -63,11 +63,11 @@ function LancamentoDetalhe() {
             className="w-full h-full object-cover"
             onError={handleImageError}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-primary-900/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-primary-800/60 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-10 text-white">
             <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl">{empreendimento.nome}</h1>
             <div className="flex items-center text-white/95">
-              <svg className="w-6 h-6 mr-3 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 mr-3 text-accent-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -191,7 +191,7 @@ function LancamentoDetalhe() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {empreendimento.areasLazer.map((area, index) => (
                     <div key={index} className="flex items-center p-5 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
-                      <svg className="w-5 h-5 text-accent-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-accent-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span className="text-gray-700 font-medium">{area}</span>
@@ -209,7 +209,7 @@ function LancamentoDetalhe() {
                 </h2>
                 {empreendimento.endereco && (
                   <div className="flex items-start mb-6 p-5 bg-primary-50/50 rounded-xl border border-primary-200/50">
-                    <svg className="w-6 h-6 text-accent-600 mr-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-accent-500 mr-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -285,7 +285,7 @@ function LancamentoDetalhe() {
                   <br />
                   <span className="font-medium">Corretora especializada em lançamentos</span>
                   <br />
-                  <span className="text-xs text-accent-600 font-semibold">CRECI SP 282.069</span>
+                  <span className="text-xs text-accent-500 font-semibold">CRECI SP 282.069</span>
                 </p>
               </div>
             </div>

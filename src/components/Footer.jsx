@@ -4,7 +4,7 @@ import { generateWhatsAppLink, generateContatoMessage, getWhatsAppNumber } from 
 
 function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-luxury-dark via-primary-900 to-luxury-navy text-white">
+    <footer className="bg-gradient-to-br from-luxury-dark via-primary-800 to-primary-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
           {/* Sobre */}
@@ -25,7 +25,7 @@ function Footer() {
               Cada empreendimento é cuidadosamente selecionado para garantir qualidade, 
               localização estratégica e o melhor custo-benefício.
             </p>
-            <p className="text-accent-400 text-sm font-semibold tracking-wide">
+            <p className="text-accent-300 text-sm font-semibold tracking-wide">
               CRECI SP 282.069
             </p>
           </div>
@@ -35,7 +35,7 @@ function Footer() {
             <h3 className="text-lg font-semibold text-white mb-8 tracking-tight">Links Rápidos</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-accent-400 transition-colors duration-300 text-sm font-medium inline-block">
+                <Link to="/" className="text-gray-300 hover:text-accent-300 transition-colors duration-300 text-sm font-medium inline-block">
                   Home
                 </Link>
               </li>
@@ -51,7 +51,7 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-white mb-8 tracking-tight">Entre em Contato</h3>
             <p className="text-gray-300 mb-4 text-sm leading-relaxed">Estamos prontos para ajudar você a encontrar o imóvel perfeito.</p>
-            <p className="text-accent-400 text-sm font-semibold mb-6">{getWhatsAppNumber()}</p>
+            <p className="text-accent-300 text-sm font-semibold mb-6">{getWhatsAppNumber()}</p>
             <a
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
