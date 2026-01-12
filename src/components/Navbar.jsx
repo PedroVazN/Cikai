@@ -41,8 +41,8 @@ function Navbar() {
               to="/"
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 isActive('/')
-                  ? 'text-primary-700 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+                  ? 'text-gray-800 bg-gray-100'
+                  : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
               }`}
             >
               Home
@@ -51,8 +51,8 @@ function Navbar() {
               to="/lancamentos"
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 isActive('/lancamentos')
-                  ? 'text-primary-700 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+                  ? 'text-gray-800 bg-gray-100'
+                  : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
               }`}
             >
               Lançamentos
@@ -61,7 +61,7 @@ function Navbar() {
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg text-sm font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
+              className="ml-2 px-6 py-2.5 bg-gray-800 text-white rounded-lg text-sm font-semibold hover:bg-gray-900 transition-all duration-300 shadow-lg shadow-gray-900/20 hover:shadow-xl hover:shadow-gray-900/30 transform hover:scale-105"
             >
               WhatsApp
             </a>
@@ -101,8 +101,8 @@ function Navbar() {
             to="/"
             className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
               isActive('/')
-                ? 'text-primary-700 bg-primary-50'
-                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+                ? 'text-gray-800 bg-gray-100'
+                : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
             }`}
             onClick={() => setIsOpen(false)}
           >
@@ -112,8 +112,8 @@ function Navbar() {
             to="/lancamentos"
             className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
               isActive('/lancamentos')
-                ? 'text-primary-700 bg-primary-50'
-                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+                ? 'text-gray-800 bg-gray-100'
+                : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
             }`}
             onClick={() => setIsOpen(false)}
           >
@@ -123,7 +123,7 @@ function Navbar() {
             href={generateWhatsAppLink(generateContatoMessage())}
             target="_blank"
             rel="noopener noreferrer"
-            className="block px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg"
+            className="block px-4 py-3 rounded-lg text-base font-semibold bg-gray-800 text-white hover:bg-gray-900 transition-all duration-300 shadow-lg"
             onClick={() => setIsOpen(false)}
           >
             WhatsApp

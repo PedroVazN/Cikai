@@ -56,10 +56,10 @@ function Lancamentos() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 pt-28 md:pt-32 pb-20">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50/30 pt-28 md:pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+          <div className="inline-block px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold mb-4">
             Lançamentos
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
@@ -83,7 +83,7 @@ function Lancamentos() {
               <select
                 value={filtros.bairro}
                 onChange={(e) => setFiltros({ ...filtros, bairro: e.target.value })}
-                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300 bg-white"
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:border-gray-600 transition-all duration-300 bg-white"
               >
                 <option value="">Todos os Bairros</option>
                 {bairrosDisponiveis.map((bairro) => (
@@ -100,7 +100,7 @@ function Lancamentos() {
               <select
                 value={filtros.dormitorios}
                 onChange={(e) => setFiltros({ ...filtros, dormitorios: e.target.value })}
-                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all duration-300"
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:border-gray-600 transition-all duration-300"
               >
                 <option value="">Todos</option>
                 <option value="1">1</option>
@@ -115,7 +115,7 @@ function Lancamentos() {
         {/* Lista de Empreendimentos */}
         {loading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-14 w-14 border-4 border-primary-200 border-t-primary-600"></div>
+            <div className="inline-block animate-spin rounded-full h-14 w-14 border-4 border-gray-200 border-t-gray-700"></div>
             <p className="text-gray-600 mt-6 font-medium">Carregando...</p>
           </div>
         ) : empreendimentos.length > 0 ? (
@@ -135,18 +135,18 @@ function Lancamentos() {
                       onError={handleImageError}
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                      <span className="text-primary-400 text-lg font-medium">Sem imagem</span>
-                    </div>
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                        <span className="text-gray-400 text-lg font-medium">Sem imagem</span>
+                      </div>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
                       {empreendimento.nome}
                     </h3>
-                    <div className="flex items-center text-primary-600 text-sm font-medium">
+                    <div className="flex items-center text-gray-600 text-sm font-medium">
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -161,7 +161,7 @@ function Lancamentos() {
                         <p className="text-xs text-gray-500 mb-1.5 font-semibold uppercase tracking-wide">Metragens</p>
                         <div className="flex flex-wrap gap-2">
                           {empreendimento.metragens.map((metragem, idx) => (
-                            <span key={idx} className="text-xs bg-gradient-to-br from-accent-50 to-accent-100 text-accent-800 px-3 py-1.5 rounded-md font-bold border border-accent-300">
+                            <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-bold border border-gray-300">
                               {metragem}m²
                             </span>
                           ))}
@@ -172,7 +172,7 @@ function Lancamentos() {
                     {/* Características */}
                     <div className="flex flex-wrap gap-2">
                       {empreendimento.dormitorios && (
-                        <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-semibold border border-gray-300">
                           <svg className="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                           </svg>
@@ -180,7 +180,7 @@ function Lancamentos() {
                         </span>
                       )}
                       {empreendimento.suites && empreendimento.suites > 0 && (
-                        <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-semibold border border-gray-300">
                           <svg className="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                           </svg>
@@ -188,7 +188,7 @@ function Lancamentos() {
                         </span>
                       )}
                       {empreendimento.vagasCarro && (
-                        <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-semibold border border-gray-300">
                           <svg className="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
@@ -196,7 +196,7 @@ function Lancamentos() {
                         </span>
                       )}
                       {empreendimento.vagasMoto && (
-                        <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-semibold border border-gray-300">
                           <svg className="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
@@ -204,7 +204,7 @@ function Lancamentos() {
                         </span>
                       )}
                       {empreendimento.vagas && !empreendimento.vagasCarro && (
-                        <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-md font-semibold border border-primary-200">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md font-semibold border border-gray-300">
                           {empreendimento.vagas} vagas
                         </span>
                       )}
@@ -212,10 +212,10 @@ function Lancamentos() {
                   </div>
                   <div className="pt-4 border-t border-gray-100">
                     <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Preço</p>
-                    <p className="text-2xl font-bold text-primary-700">
+                    <p className="text-2xl font-bold text-gray-800">
                       Sob Consulta
                     </p>
-                    <p className="text-xs text-primary-600 font-medium mt-1">Fale conosco!</p>
+                    <p className="text-xs text-gray-600 font-medium mt-1">Fale conosco!</p>
                   </div>
                 </div>
               </Link>

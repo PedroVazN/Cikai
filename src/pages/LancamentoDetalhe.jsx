@@ -63,11 +63,11 @@ function LancamentoDetalhe() {
             className="w-full h-full object-cover"
             onError={handleImageError}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-primary-800/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-800/60 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-10 text-white">
             <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl">{empreendimento.nome}</h1>
             <div className="flex items-center text-white/95">
-              <svg className="w-6 h-6 mr-3 text-accent-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 mr-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -76,8 +76,8 @@ function LancamentoDetalhe() {
           </div>
         </div>
       ) : (
-        <div className="h-[550px] bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center">
-          <span className="text-primary-600 text-xl font-medium">Sem imagem</span>
+        <div className="h-[550px] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+          <span className="text-gray-600 text-xl font-medium">Sem imagem</span>
         </div>
       )}
 
@@ -87,11 +87,11 @@ function LancamentoDetalhe() {
           <div className="lg:col-span-2 space-y-10">
             {/* Breadcrumb */}
             <nav className="text-sm text-gray-600 mb-4 font-medium">
-              <Link to="/" className="hover:text-primary-700 transition-colors">Home</Link>
+              <Link to="/" className="hover:text-gray-800 transition-colors">Home</Link>
               <span className="mx-2 text-gray-400">/</span>
-              <Link to="/lancamentos" className="hover:text-primary-700 transition-colors">Lançamentos</Link>
+              <Link to="/lancamentos" className="hover:text-gray-800 transition-colors">Lançamentos</Link>
               <span className="mx-2 text-gray-400">/</span>
-              <span className="text-primary-800 font-semibold">{empreendimento.nome}</span>
+              <span className="text-gray-800 font-semibold">{empreendimento.nome}</span>
             </nav>
 
             {/* Galeria de Imagens */}
@@ -104,7 +104,7 @@ function LancamentoDetalhe() {
 
             {/* Descrição */}
             <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
-              <h2 className="text-3xl font-bold mb-8 text-primary-800 tracking-tight">
+              <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                 Sobre o Empreendimento
               </h2>
               <p className="text-gray-700 whitespace-pre-line leading-relaxed text-base">{empreendimento.descricao}</p>
@@ -112,17 +112,17 @@ function LancamentoDetalhe() {
 
             {/* Características */}
             <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
-              <h2 className="text-3xl font-bold mb-8 text-primary-800 tracking-tight">
+              <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                 Características
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {/* Metragens Disponíveis */}
                 {empreendimento.metragens && empreendimento.metragens.length > 0 && (
-                  <div className="p-6 bg-gradient-to-br from-accent-50 to-accent-100 rounded-xl border border-accent-200/50 shadow-sm md:col-span-2">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200/50 shadow-sm md:col-span-2">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Metragens Disponíveis</p>
                     <div className="flex flex-wrap gap-2">
                       {empreendimento.metragens.map((metragem, idx) => (
-                        <span key={idx} className="px-4 py-2 bg-white text-accent-800 rounded-lg font-bold text-lg border border-accent-300 shadow-sm">
+                        <span key={idx} className="px-4 py-2 bg-white text-gray-800 rounded-lg font-bold text-lg border border-gray-300 shadow-sm">
                           {metragem}m²
                         </span>
                       ))}
@@ -130,26 +130,26 @@ function LancamentoDetalhe() {
                   </div>
                 )}
                 {empreendimento.metragemMin && (!empreendimento.metragens || empreendimento.metragens.length === 0) && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Área Mínima</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.metragemMin}m²</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.metragemMin}m²</p>
                   </div>
                 )}
                 {empreendimento.metragemMax && (!empreendimento.metragens || empreendimento.metragens.length === 0) && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Área Máxima</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.metragemMax}m²</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.metragemMax}m²</p>
                   </div>
                 )}
                 {empreendimento.dormitorios && (
-                  <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                  <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                     <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Dormitórios</p>
-                    <p className="text-3xl font-bold text-primary-800">{empreendimento.dormitorios}</p>
+                    <p className="text-3xl font-bold text-gray-800">{empreendimento.dormitorios}</p>
                   </div>
                 )}
-                <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+                <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                   <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Suítes</p>
-                  <p className="text-3xl font-bold text-primary-800">
+                  <p className="text-3xl font-bold text-gray-800">
                     {empreendimento.suites && empreendimento.suites > 0 
                       ? empreendimento.suites 
                       : 'Não possui'}
@@ -185,7 +185,7 @@ function LancamentoDetalhe() {
             {/* Áreas de Lazer */}
             {empreendimento.areasLazer && empreendimento.areasLazer.length > 0 && (
               <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
-                <h2 className="text-3xl font-bold mb-8 text-primary-800 tracking-tight">
+                <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                   Áreas de Lazer
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -204,7 +204,7 @@ function LancamentoDetalhe() {
             {/* Google Maps */}
             {(empreendimento.endereco || empreendimento.googleMapsUrl) && (
               <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
-                <h2 className="text-3xl font-bold mb-8 text-primary-800 tracking-tight">
+                <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                   Localização
                 </h2>
                 {empreendimento.endereco && (
@@ -255,13 +255,13 @@ function LancamentoDetalhe() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-elegant-lg p-10 sticky top-28 border-elegant">
-              <h2 className="text-3xl font-bold mb-8 text-primary-800">Informações</h2>
-              <div className="mb-10 p-8 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-200/50 shadow-sm">
+              <h2 className="text-3xl font-bold mb-8 text-gray-800">Informações</h2>
+              <div className="mb-10 p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200/50 shadow-sm">
                 <p className="text-xs text-gray-600 mb-3 uppercase tracking-wider font-semibold">Preço</p>
-                <p className="text-3xl font-bold text-primary-800 mb-2">
+                <p className="text-3xl font-bold text-gray-800 mb-2">
                   Sob Consulta
                 </p>
-                <p className="text-sm text-primary-600 font-semibold mt-2">Fale conosco!</p>
+                <p className="text-sm text-gray-700 font-semibold mt-2">Fale conosco!</p>
                 <p className="text-xs text-gray-600 font-medium mt-2">Preços negociáveis</p>
               </div>
 

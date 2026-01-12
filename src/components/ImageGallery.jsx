@@ -79,7 +79,7 @@ function ImageGallery({ images, title = 'Galeria de Fotos' }) {
           <div className="mt-6 text-center">
             <button
               onClick={() => setShowAll(false)}
-              className="text-primary-600 hover:text-primary-700 font-medium"
+              className="text-gray-700 hover:text-gray-900 font-medium"
             >
               Mostrar Menos
             </button>
