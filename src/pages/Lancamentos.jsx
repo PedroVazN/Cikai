@@ -58,21 +58,23 @@ function Lancamentos() {
   }
 
   return (
-    <div className="min-h-screen bg-luxury-cream py-16">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-primary-800 tracking-tight">
+          <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+            Lançamentos
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             Nossos Lançamentos
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
-            Explore nossa seleção exclusiva de empreendimentos cuidadosamente escolhidos. 
-            Cada projeto representa uma oportunidade única de encontrar o lar ideal.
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Explore nossa seleção exclusiva de empreendimentos cuidadosamente escolhidos
           </p>
         </div>
 
         {/* Filtros */}
-        <div className="bg-white p-8 rounded-2xl shadow-elegant mb-12 border-elegant">
-          <h2 className="text-xl font-bold mb-8 text-primary-800">
+        <div className="bg-white p-8 rounded-2xl shadow-lg mb-12 border border-gray-100">
+          <h2 className="text-xl font-bold mb-8 text-gray-900">
             Filtros de Busca
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -127,39 +129,44 @@ function Lancamentos() {
         {/* Lista de Empreendimentos */}
         {loading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-14 w-14 border-3 border-primary-200 border-t-primary-700"></div>
+            <div className="inline-block animate-spin rounded-full h-14 w-14 border-4 border-primary-200 border-t-primary-600"></div>
             <p className="text-gray-600 mt-6 font-medium">Carregando...</p>
           </div>
         ) : empreendimentos.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {empreendimentos.map((empreendimento) => (
               <Link
                 key={empreendimento._id}
                 to={`/lancamentos/${empreendimento._id}`}
-                className="group bg-white rounded-2xl shadow-elegant overflow-hidden hover:shadow-elegant-lg transition-all duration-300 border-elegant card-hover"
+                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                {empreendimento.imagens && empreendimento.imagens.length > 0 ? (
-                  <img
-                    src={normalizeImageUrl(empreendimento.imagens[0])}
-                    alt={empreendimento.nome}
-                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={handleImageError}
-                  />
-                ) : (
-                  <div className="w-full h-72 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                    <span className="text-primary-400 text-lg font-medium">Sem imagem</span>
-                  </div>
-                )}
-                <div className="p-7">
-                  <h3 className="text-xl font-bold mb-3 text-primary-800 group-hover:text-primary-700 transition-colors">
-                    {empreendimento.nome}
-                  </h3>
-                  <div className="flex items-center text-primary-600 mb-5 text-sm font-medium">
-                    <svg className="w-4 h-4 mr-2 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span>{empreendimento.bairro}</span>
+                <div className="relative h-64 overflow-hidden">
+                  {empreendimento.imagens && empreendimento.imagens.length > 0 ? (
+                    <img
+                      src={normalizeImageUrl(empreendimento.imagens[0])}
+                      alt={empreendimento.nome}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                      <span className="text-primary-400 text-lg font-medium">Sem imagem</span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div className="p-6 space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">
+                      {empreendimento.nome}
+                    </h3>
+                    <div className="flex items-center text-primary-600 text-sm font-medium">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      {empreendimento.bairro}
+                    </div>
                   </div>
                   <div className="space-y-3 mb-5">
                     {/* Metragens */}
@@ -217,9 +224,9 @@ function Lancamentos() {
                       )}
                     </div>
                   </div>
-                  <div className="pt-5 border-t border-gray-200/60">
-                    <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">A partir de</p>
-                    <p className="text-3xl font-bold text-primary-800">
+                  <div className="pt-4 border-t border-gray-100">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">A partir de</p>
+                    <p className="text-2xl font-bold text-primary-700">
                       R$ {empreendimento.precoInicial?.toLocaleString('pt-BR')}
                     </p>
                   </div>
@@ -228,7 +235,7 @@ function Lancamentos() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-elegant border-elegant">
+          <div className="text-center py-20 bg-white rounded-2xl shadow-lg">
             <p className="text-gray-600 text-lg font-medium">Nenhum lançamento encontrado com os filtros selecionados.</p>
           </div>
         )}
