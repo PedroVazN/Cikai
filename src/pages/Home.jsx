@@ -67,7 +67,7 @@ function Home() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section Elegante com Banner */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-24 md:pt-28">
+      <section className="relative min-h-[70vh] md:min-h-[75vh] flex items-center overflow-hidden pt-20 md:pt-24">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
@@ -78,39 +78,39 @@ function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-20">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 md:py-10">
+          <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-6">
             {/* Badge */}
-            <div className="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md text-white rounded-full text-sm font-semibold mb-4 border border-white/30">
+            <div className="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-md text-white rounded-full text-xs md:text-sm font-semibold mb-2 md:mb-3 border border-white/30">
               CRECI SP 282.069
             </div>
             
             {/* Título */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-white">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
               <span className="block">Parcelas Menores</span>
-              <span className="block mt-2 bg-gradient-to-r from-primary-300 to-primary-200 bg-clip-text text-transparent">
+              <span className="block mt-1 md:mt-2 bg-gradient-to-r from-primary-300 to-primary-200 bg-clip-text text-transparent">
                 que o Seu Aluguel
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto px-2">
               No apartamento dos seus sonhos, nas melhores regiões de <span className="font-bold text-primary-300">São Paulo e ABC</span>
             </p>
 
             {/* Filtros Elegantes */}
-            <div className="bg-white/95 backdrop-blur-lg rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20 mt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Encontre seu imóvel ideal</h2>
+            <div className="bg-white/95 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl border border-white/20 mt-6 md:mt-8">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-5">Encontre seu imóvel ideal</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-5">
                 {/* Filtro Bairro */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">
                     Bairro
                   </label>
                   <select
                     value={filtrosBanner.bairro}
                     onChange={(e) => setFiltrosBanner({ ...filtrosBanner, bairro: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
+                    className="w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
                   >
                     <option value="">Todos os bairros</option>
                     {bairrosDisponiveis.map((bairro) => (
@@ -123,13 +123,13 @@ function Home() {
 
                 {/* Filtro Dormitórios */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">
                     Dormitórios
                   </label>
                   <select
                     value={filtrosBanner.dormitorios}
                     onChange={(e) => setFiltrosBanner({ ...filtrosBanner, dormitorios: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
+                    className="w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
                   >
                     <option value="">Todos</option>
                     <option value="1">1 dormitório</option>
@@ -143,9 +143,9 @@ function Home() {
                 <div className="flex items-end">
                   <button
                     onClick={handleBuscar}
-                    className="w-full px-6 py-3 bg-primary-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                    className="w-full px-4 md:px-6 py-2.5 md:py-3 bg-primary-600 text-white rounded-lg md:rounded-xl font-bold text-sm md:text-base shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     Buscar
@@ -154,10 +154,10 @@ function Home() {
               </div>
 
               {/* Links Rápidos */}
-              <div className="flex flex-wrap gap-3 justify-center pt-4 border-t border-gray-200">
+              <div className="flex flex-wrap gap-2 md:gap-3 justify-center pt-3 md:pt-4 border-t border-gray-200">
                 <Link 
                   to="/lancamentos" 
-                  className="px-5 py-2 text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
+                  className="px-3 md:px-5 py-1.5 md:py-2 text-xs md:text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
                 >
                   Ver todos os lançamentos
                 </Link>
@@ -166,7 +166,7 @@ function Home() {
                   href={generateWhatsAppLink(generateContatoMessage())}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2 text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
+                  className="px-3 md:px-5 py-1.5 md:py-2 text-xs md:text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
                 >
                   Falar no WhatsApp
                 </a>
@@ -174,18 +174,18 @@ function Home() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8">
+            <div className="grid grid-cols-3 gap-4 md:gap-6 pt-4 md:pt-6">
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">500+</div>
-                <div className="text-sm text-white/80 font-medium">Clientes</div>
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">500+</div>
+                <div className="text-xs md:text-sm text-white/80 font-medium">Clientes</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">50+</div>
-                <div className="text-sm text-white/80 font-medium">Famílias</div>
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">50+</div>
+                <div className="text-xs md:text-sm text-white/80 font-medium">Famílias</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">5+</div>
-                <div className="text-sm text-white/80 font-medium">Anos</div>
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">5+</div>
+                <div className="text-xs md:text-sm text-white/80 font-medium">Anos</div>
               </div>
             </div>
           </div>
