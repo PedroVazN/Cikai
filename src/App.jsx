@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Lancamentos from './pages/Lancamentos'
 import LancamentoDetalhe from './pages/LancamentoDetalhe'
@@ -14,6 +15,7 @@ import ProtectedRoute from './admin/ProtectedRoute'
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/* Rotas Públicas */}
         <Route path="/" element={<Layout />}>
