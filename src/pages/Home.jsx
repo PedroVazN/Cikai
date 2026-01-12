@@ -12,6 +12,34 @@ import cliente3 from '../imgs/3.png'
 function Home() {
   const [destaques, setDestaques] = useState([])
   const [loading, setLoading] = useState(true)
+  const [bairrosDisponiveis, setBairrosDisponiveis] = useState([])
+  const [filtrosBanner, setFiltrosBanner] = useState({
+    bairro: '',
+    dormitorios: '',
+  })
+
+  // Buscar bairros disponíveis
+  useEffect(() => {
+    const fetchBairros = async () => {
+      try {
+        const response = await api.get('/empreendimentos')
+        const todosEmpreendimentos = response.data
+        
+        // Extrair bairros únicos e ordenar
+        const bairrosUnicos = [...new Set(
+          todosEmpreendimentos
+            .map(emp => emp.bairro)
+            .filter(bairro => bairro && bairro.trim() !== '')
+        )].sort()
+        
+        setBairrosDisponiveis(bairrosUnicos)
+      } catch (error) {
+        console.error('Erro ao carregar bairros:', error)
+      }
+    }
+    
+    fetchBairros()
+  }, [])
 
   useEffect(() => {
     const fetchDestaques = async () => {
@@ -28,88 +56,137 @@ function Home() {
     fetchDestaques()
   }, [])
 
+  const handleBuscar = () => {
+    const params = new URLSearchParams()
+    if (filtrosBanner.bairro) params.append('bairro', filtrosBanner.bairro)
+    if (filtrosBanner.dormitorios) params.append('dormitorios', filtrosBanner.dormitorios)
+    
+    window.location.href = `/lancamentos?${params.toString()}`
+  }
+
   return (
     <div className="overflow-hidden">
-      {/* Hero Section Moderno */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-50 pt-24 md:pt-28">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}></div>
+      {/* Hero Section Elegante com Banner */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-24 md:pt-28">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src={bannerImage} 
+            alt="Banner C.Ikai" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 md:py-12">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Conteúdo */}
-            <div className="text-center lg:text-left space-y-8">
-              <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
-                CRECI SP 282.069
-              </div>
-              
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-                <span className="block text-gray-900">Parcelas Menores</span>
-                <span className="block text-gray-700 mt-2">
-                  que o Seu Aluguel
-                </span>
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                No apartamento dos seus sonhos, nas melhores regiões de <span className="font-bold text-primary-700">São Paulo e ABC</span>
-              </p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-20">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            {/* Badge */}
+            <div className="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md text-white rounded-full text-sm font-semibold mb-4 border border-white/30">
+              CRECI SP 282.069
+            </div>
+            
+            {/* Título */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-white">
+              <span className="block">Parcelas Menores</span>
+              <span className="block mt-2 bg-gradient-to-r from-primary-300 to-primary-200 bg-clip-text text-transparent">
+                que o Seu Aluguel
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+              No apartamento dos seus sonhos, nas melhores regiões de <span className="font-bold text-primary-300">São Paulo e ABC</span>
+            </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* Filtros Elegantes */}
+            <div className="bg-white/95 backdrop-blur-lg rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20 mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Encontre seu imóvel ideal</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {/* Filtro Bairro */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Bairro
+                  </label>
+                  <select
+                    value={filtrosBanner.bairro}
+                    onChange={(e) => setFiltrosBanner({ ...filtrosBanner, bairro: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
+                  >
+                    <option value="">Todos os bairros</option>
+                    {bairrosDisponiveis.map((bairro) => (
+                      <option key={bairro} value={bairro}>
+                        {bairro}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Filtro Dormitórios */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Dormitórios
+                  </label>
+                  <select
+                    value={filtrosBanner.dormitorios}
+                    onChange={(e) => setFiltrosBanner({ ...filtrosBanner, dormitorios: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 bg-white text-gray-900 font-medium"
+                  >
+                    <option value="">Todos</option>
+                    <option value="1">1 dormitório</option>
+                    <option value="2">2 dormitórios</option>
+                    <option value="3">3 dormitórios</option>
+                    <option value="4+">4+ dormitórios</option>
+                  </select>
+                </div>
+
+                {/* Botão Buscar */}
+                <div className="flex items-end">
+                  <button
+                    onClick={handleBuscar}
+                    className="w-full px-6 py-3 bg-primary-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Buscar
+                  </button>
+                </div>
+              </div>
+
+              {/* Links Rápidos */}
+              <div className="flex flex-wrap gap-3 justify-center pt-4 border-t border-gray-200">
                 <Link 
                   to="/lancamentos" 
-                  className="group relative px-8 py-4 bg-primary-600 text-white rounded-xl font-semibold text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all duration-300 transform hover:scale-105"
+                  className="px-5 py-2 text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    Ver Lançamentos
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </span>
+                  Ver todos os lançamentos
                 </Link>
+                <span className="text-gray-300">•</span>
                 <a
                   href={generateWhatsAppLink(generateContatoMessage())}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 bg-white text-primary-700 border-2 border-primary-200 rounded-xl font-semibold text-lg hover:border-primary-300 hover:bg-primary-50 transition-all duration-300"
+                  className="px-5 py-2 text-sm text-gray-700 hover:text-primary-700 font-medium transition-colors"
                 >
                   Falar no WhatsApp
                 </a>
               </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold text-primary-700 mb-1">500+</div>
-                  <div className="text-sm text-gray-600 font-medium">Clientes</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold text-primary-700 mb-1">50+</div>
-                  <div className="text-sm text-gray-600 font-medium">Famílias</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold text-primary-700 mb-1">5+</div>
-                  <div className="text-sm text-gray-600 font-medium">Anos</div>
-                </div>
-              </div>
             </div>
 
-            {/* Imagem Hero */}
-            <div className="relative hidden lg:block">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src={bannerImage} 
-                  alt="Banner C.Ikai" 
-                  className="w-full h-[600px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 pt-8">
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">500+</div>
+                <div className="text-sm text-white/80 font-medium">Clientes</div>
               </div>
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gray-300 rounded-2xl opacity-10 blur-2xl"></div>
-              <div className="absolute -top-6 -right-6 w-40 h-40 bg-gray-300 rounded-full opacity-10 blur-3xl"></div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">50+</div>
+                <div className="text-sm text-white/80 font-medium">Famílias</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">5+</div>
+                <div className="text-sm text-white/80 font-medium">Anos</div>
+              </div>
             </div>
           </div>
         </div>

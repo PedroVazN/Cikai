@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 
 function Lancamentos() {
+  const [searchParams] = useSearchParams()
   const [empreendimentos, setEmpreendimentos] = useState([])
   const [bairrosDisponiveis, setBairrosDisponiveis] = useState([])
   const [loading, setLoading] = useState(true)
   const [filtros, setFiltros] = useState({
-    bairro: '',
-    dormitorios: '',
+    bairro: searchParams.get('bairro') || '',
+    dormitorios: searchParams.get('dormitorios') || '',
   })
 
   // Buscar bairros disponíveis ao carregar
