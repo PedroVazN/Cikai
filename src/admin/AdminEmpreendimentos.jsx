@@ -19,7 +19,6 @@ function AdminEmpreendimentos() {
     vagas: '',
     vagasCarro: '',
     vagasMoto: '',
-    precoInicial: '',
     descricao: '',
     endereco: '',
     googleMapsUrl: '',
@@ -231,7 +230,6 @@ function AdminEmpreendimentos() {
         vagas: formData.vagas ? Number(formData.vagas) : undefined,
         vagasCarro: formData.vagasCarro ? Number(formData.vagasCarro) : undefined,
         vagasMoto: formData.vagasMoto ? Number(formData.vagasMoto) : undefined,
-        ...(formData.precoInicial && { precoInicial: Number(formData.precoInicial) }),
       }
 
       if (editingId) {
@@ -266,7 +264,6 @@ function AdminEmpreendimentos() {
       vagas: empreendimento.vagas || '',
       vagasCarro: empreendimento.vagasCarro || '',
       vagasMoto: empreendimento.vagasMoto || '',
-      precoInicial: empreendimento.precoInicial || '',
       descricao: empreendimento.descricao || '',
       endereco: empreendimento.endereco || '',
       googleMapsUrl: empreendimento.googleMapsUrl || '',
@@ -304,7 +301,6 @@ function AdminEmpreendimentos() {
       vagas: '',
       vagasCarro: '',
       vagasMoto: '',
-      precoInicial: '',
       descricao: '',
       endereco: '',
       googleMapsUrl: '',
@@ -828,7 +824,6 @@ function AdminEmpreendimentos() {
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nome</th>
                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Bairro</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Preço</th>
                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
                   <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Ações</th>
                 </tr>
@@ -849,11 +844,6 @@ function AdminEmpreendimentos() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         {emp.bairro}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">
-                        R$ {emp.precoInicial?.toLocaleString('pt-BR')}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

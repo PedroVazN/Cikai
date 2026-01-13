@@ -17,7 +17,7 @@ const ensureConnection = async () => {
 router.get('/', async (req, res) => {
   try {
     await ensureConnection()
-    const { bairro, dormitorios, precoMax, destaque, limit } = req.query
+    const { bairro, dormitorios, destaque, limit } = req.query
     const query = { ativo: true }
 
     if (bairro) {
@@ -26,10 +26,6 @@ router.get('/', async (req, res) => {
 
     if (dormitorios) {
       query.dormitorios = dormitorios === '4+' ? { $gte: 4 } : parseInt(dormitorios)
-    }
-
-    if (precoMax) {
-      query.precoInicial = { $lte: parseFloat(precoMax) }
     }
 
     // Query simples
@@ -69,18 +65,11 @@ router.post('/', authenticateToken, async (req, res) => {
   try {
     await ensureConnection()
     // Validação básica
-    const { nome, bairro, precoInicial, descricao } = req.body
+    const { nome, bairro, descricao } = req.body
     
-    if (!nome || !bairro || !precoInicial || !descricao) {
+    if (!nome || !bairro || !descricao) {
       return res.status(400).json({ 
-        message: 'Campos obrigatórios: nome, bairro, precoInicial e descricao' 
-      })
-    }
-
-    // Validar preço
-    if (precoInicial <= 0) {
-      return res.status(400).json({ 
-        message: 'O preço inicial deve ser maior que zero' 
+        message: 'Campos obrigatórios: nome, bairro e descricao' 
       })
     }
 
@@ -111,13 +100,6 @@ router.post('/', authenticateToken, async (req, res) => {
 router.put('/:id', authenticateToken, async (req, res) => {
   try {
     await ensureConnection()
-    // Validar preço se fornecido
-    if (req.body.precoInicial !== undefined && req.body.precoInicial <= 0) {
-      return res.status(400).json({ 
-        message: 'O preço inicial deve ser maior que zero' 
-      })
-    }
-
     // Validar imagens (se houver)
     if (req.body.imagens && !Array.isArray(req.body.imagens)) {
       return res.status(400).json({ 

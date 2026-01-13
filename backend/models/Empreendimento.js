@@ -41,10 +41,6 @@ const empreendimentoSchema = new mongoose.Schema(
     vagasMoto: {
       type: Number,
     },
-    precoInicial: {
-      type: Number,
-      required: true,
-    },
     descricao: {
       type: String,
       required: true,
@@ -82,7 +78,6 @@ const empreendimentoSchema = new mongoose.Schema(
 // Índices para busca otimizada
 empreendimentoSchema.index({ ativo: 1, criadoEm: -1 }) // Índice composto para listagem
 empreendimentoSchema.index({ bairro: 1, ativo: 1 }) // Índice composto para busca por bairro
-empreendimentoSchema.index({ precoInicial: 1, ativo: 1 }) // Índice composto para filtro de preço
 
 const Empreendimento = mongoose.model('Empreendimento', empreendimentoSchema)
 
