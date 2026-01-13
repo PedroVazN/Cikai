@@ -215,13 +215,8 @@ function AdminEmpreendimentos() {
     e.preventDefault()
     
     // Validação básica no frontend
-    if (!formData.nome || !formData.bairro || !formData.precoInicial || !formData.descricao) {
+    if (!formData.nome || !formData.bairro || !formData.descricao) {
       alert('Por favor, preencha todos os campos obrigatórios')
-      return
-    }
-
-    if (formData.precoInicial <= 0) {
-      alert('O preço inicial deve ser maior que zero')
       return
     }
 
@@ -236,7 +231,7 @@ function AdminEmpreendimentos() {
         vagas: formData.vagas ? Number(formData.vagas) : undefined,
         vagasCarro: formData.vagasCarro ? Number(formData.vagasCarro) : undefined,
         vagasMoto: formData.vagasMoto ? Number(formData.vagasMoto) : undefined,
-        precoInicial: Number(formData.precoInicial),
+        ...(formData.precoInicial && { precoInicial: Number(formData.precoInicial) }),
       }
 
       if (editingId) {
@@ -532,19 +527,6 @@ function AdminEmpreendimentos() {
                       ))}
                     </div>
                   )}
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Preço Inicial (R$) *
-                  </label>
-                  <input
-                    type="number"
-                    name="precoInicial"
-                    required
-                    value={formData.precoInicial}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
-                  />
                 </div>
               </div>
               <div>
