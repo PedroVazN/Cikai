@@ -315,28 +315,37 @@ function AdminEmpreendimentos() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <Link to="/admin" className="text-primary-600 hover:text-primary-700">
-              ← Voltar ao Dashboard
+      <div className="bg-white shadow-lg border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <Link 
+              to="/admin" 
+              className="flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors text-sm sm:text-base"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Voltar ao Dashboard
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900">Gerenciar Lançamentos</h1>
-            <button onClick={() => setShowForm(!showForm)} className="btn-primary">
-              {showForm ? 'Cancelar' : 'Novo Lançamento'}
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 text-center sm:text-left">Gerenciar Lançamentos</h1>
+            <button 
+              onClick={() => setShowForm(!showForm)} 
+              className="btn-primary text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 whitespace-nowrap"
+            >
+              {showForm ? 'Cancelar' : '+ Novo Lançamento'}
             </button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         {showForm && (
-          <div className="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 className="text-2xl font-bold mb-6">
+          <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-lg mb-6 sm:mb-8 border border-gray-100">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">
               {editingId ? 'Editar Lançamento' : 'Novo Lançamento'}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Nome do Empreendimento *
@@ -475,7 +484,7 @@ function AdminEmpreendimentos() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Metragens Disponíveis (m²)
                   </label>
-                  <div className="flex gap-2 mb-2">
+                  <div className="flex flex-col sm:flex-row gap-2 mb-2">
                     <input
                       type="number"
                       value={novaMetragem}
@@ -494,7 +503,7 @@ function AdminEmpreendimentos() {
                           setNovaMetragem('')
                         }
                       }}
-                      className="px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-semibold"
+                      className="px-4 sm:px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-semibold text-sm sm:text-base whitespace-nowrap"
                     >
                       Adicionar
                     </button>
@@ -604,7 +613,7 @@ function AdminEmpreendimentos() {
                     <p className="text-sm text-gray-600 mb-2">
                       {formData.imagens.length} imagem(ns) adicionada(s)
                     </p>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                       {formData.imagens.map((img, index) => (
                         <div 
                           key={index} 
@@ -658,7 +667,7 @@ function AdminEmpreendimentos() {
                 <label className="block text-sm font-medium text-gray-700 mb-3">
                   Áreas de Lazer
                 </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                   {areasLazerPadrao.slice(0, showMoreAreas ? areasLazerPadrao.length : 6).map((area) => {
                     const isSelected = Array.isArray(formData.areasLazer) && formData.areasLazer.includes(area)
                     return (
@@ -776,10 +785,10 @@ function AdminEmpreendimentos() {
                 />
                 <label className="text-sm font-medium text-gray-700">Ativo</label>
               </div>
-                        <div className="flex gap-4 pt-6 border-t border-gray-200">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200">
                           <button 
                             type="submit" 
-                            className="flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                            className="flex items-center justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base"
                           >
                             {editingId ? (
                               <>
@@ -800,7 +809,7 @@ function AdminEmpreendimentos() {
                           <button 
                             type="button" 
                             onClick={resetForm} 
-                            className="flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-200"
+                            className="flex items-center justify-center px-4 sm:px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-200 text-sm sm:text-base"
                           >
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -818,82 +827,147 @@ function AdminEmpreendimentos() {
             <p className="ml-4 text-gray-600">Carregando lançamentos...</p>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
-                <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nome</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Bairro</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
-                {empreendimentos.map((emp) => (
-                  <tr key={emp._id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">{emp.nome}</div>
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden lg:block bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nome</th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Bairro</th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-100">
+                    {empreendimentos.map((emp) => (
+                      <tr key={emp._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-semibold text-gray-900">{emp.nome}</div>
+                          {emp.construtora && (
+                            <div className="text-xs text-gray-500 mt-1">{emp.construtora}</div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center text-sm text-gray-600">
+                            <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {emp.bairro}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                            emp.ativo 
+                              ? 'bg-green-100 text-green-800 border border-green-200' 
+                              : 'bg-gray-100 text-gray-800 border border-gray-200'
+                          }`}>
+                            {emp.ativo ? (
+                              <>
+                                <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Ativo
+                              </>
+                            ) : (
+                              <>
+                                <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                                Inativo
+                              </>
+                            )}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center space-x-3">
+                            <button
+                              onClick={() => handleEdit(emp)}
+                              className="flex items-center px-3 py-1.5 bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100 transition-colors font-medium"
+                              title="Editar"
+                            >
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                              Editar
+                            </button>
+                            <button
+                              onClick={() => handleDelete(emp._id)}
+                              className="flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors font-medium"
+                              title="Excluir"
+                            >
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                              Excluir
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="lg:hidden space-y-4">
+              {empreendimentos.map((emp) => (
+                <div key={emp._id} className="bg-white rounded-xl shadow-lg border border-gray-100 p-4 sm:p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">{emp.nome}</h3>
                       {emp.construtora && (
-                        <div className="text-xs text-gray-500 mt-1">{emp.construtora}</div>
+                        <p className="text-sm text-gray-500 mb-2">{emp.construtora}</p>
                       )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center text-sm text-gray-600">
+                      <div className="flex items-center text-sm text-gray-600 mb-3">
                         <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         {emp.bairro}
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                        emp.ativo 
-                          ? 'bg-green-100 text-green-800 border border-green-200' 
-                          : 'bg-gray-100 text-gray-800 border border-gray-200'
-                      }`}>
-                        {emp.ativo ? (
-                          <>
-                            <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                            Ativo
-                          </>
-                        ) : (
-                          <>
-                            <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-                            Inativo
-                          </>
-                        )}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center space-x-3">
-                        <button
-                          onClick={() => handleEdit(emp)}
-                          className="flex items-center px-3 py-1.5 bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100 transition-colors font-medium"
-                          title="Editar"
-                        >
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(emp._id)}
-                          className="flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors font-medium"
-                          title="Excluir"
-                        >
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                          Excluir
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </div>
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                      emp.ativo 
+                        ? 'bg-green-100 text-green-800 border border-green-200' 
+                        : 'bg-gray-100 text-gray-800 border border-gray-200'
+                    }`}>
+                      {emp.ativo ? (
+                        <>
+                          <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                          Ativo
+                        </>
+                      ) : (
+                        <>
+                          <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                          Inativo
+                        </>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2 pt-4 border-t border-gray-100">
+                    <button
+                      onClick={() => handleEdit(emp)}
+                      className="flex-1 flex items-center justify-center px-4 py-2.5 bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100 transition-colors font-medium text-sm"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(emp._id)}
+                      className="flex-1 flex items-center justify-center px-4 py-2.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors font-medium text-sm"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Excluir
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
