@@ -292,6 +292,12 @@ function LancamentoDetalhe() {
                 >
                   Tenho Interesse
                 </Link>
+                <Link
+                  to="/como-comprar"
+                  className="w-full btn-luxury text-center block"
+                >
+                  Como Comprar
+                </Link>
                 <button
                   onClick={handleWhatsApp}
                   className="w-full btn-luxury"
