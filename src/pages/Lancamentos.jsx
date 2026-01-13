@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
+import { generateWhatsAppLink, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
 
 function Lancamentos() {
   const [searchParams] = useSearchParams()
@@ -122,31 +123,33 @@ function Lancamentos() {
         ) : empreendimentos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {empreendimentos.map((empreendimento) => (
-              <Link
+              <div
                 key={empreendimento._id}
-                to={`/lancamentos/${empreendimento._id}`}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                <div className="relative h-64 overflow-hidden">
-                  {empreendimento.imagens && empreendimento.imagens.length > 0 ? (
-                    <img
-                      src={normalizeImageUrl(empreendimento.imagens[0])}
-                      alt={empreendimento.nome}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      onError={handleImageError}
-                    />
-                  ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400 text-lg font-medium">Sem imagem</span>
-                      </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
+                <Link to={`/lancamentos/${empreendimento._id}`}>
+                  <div className="relative h-64 overflow-hidden">
+                    {empreendimento.imagens && empreendimento.imagens.length > 0 ? (
+                      <img
+                        src={normalizeImageUrl(empreendimento.imagens[0])}
+                        alt={empreendimento.nome}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        onError={handleImageError}
+                      />
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                          <span className="text-gray-400 text-lg font-medium">Sem imagem</span>
+                        </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                </Link>
                 <div className="p-6 space-y-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
-                      {empreendimento.nome}
-                    </h3>
+                  <Link to={`/lancamentos/${empreendimento._id}`}>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
+                        {empreendimento.nome}
+                      </h3>
                     <div className="flex items-center text-gray-600 text-sm font-medium">
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -154,7 +157,8 @@ function Lancamentos() {
                       </svg>
                       {empreendimento.bairro}
                     </div>
-                  </div>
+                    </div>
+                  </Link>
                   <div className="space-y-3 mb-5">
                     {/* Metragens */}
                     {empreendimento.metragens && empreendimento.metragens.length > 0 && (
@@ -218,8 +222,28 @@ function Lancamentos() {
                     </p>
                     <p className="text-xs text-primary-600 font-medium mt-1">Fale conosco!</p>
                   </div>
+                  
+                  {/* Botões de Ação */}
+                  <div className="pt-4 space-y-3">
+                    <a
+                      href={generateWhatsAppLink(generateEmpreendimentoMessage(empreendimento.nome))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-full btn-luxury text-center block"
+                    >
+                      Falar no WhatsApp
+                    </a>
+                    <Link
+                      to="/como-comprar"
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-full btn-primary text-center block"
+                    >
+                      Como Comprar
+                    </Link>
+                  </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         ) : (
