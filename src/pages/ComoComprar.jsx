@@ -96,7 +96,7 @@ function ComoComprar() {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* Programas Habitacionais */}
         <section className="mb-20">
