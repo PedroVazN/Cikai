@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logoImage from '../imgs/Celia.png'
+import logoImage from '../imgs/logo_branca.png'
 import { generateWhatsAppLink, generateContatoMessage, getWhatsAppNumber } from '../utils/whatsappHelper'
 
 function Footer() {
@@ -13,7 +13,7 @@ function Footer() {
               <img 
                 src={logoImage} 
                 alt="C.Ikai - Logo" 
-                className="h-12 object-contain brightness-0 invert mb-4"
+                className="h-12 object-contain mb-4"
               />
             </div>
             <p className="text-gray-400 leading-relaxed text-sm">

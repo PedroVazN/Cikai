@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import logoImage from '../imgs/Celia.png'
+import logoImage from '../imgs/logo.png'
 import { generateWhatsAppLink, generateContatoMessage } from '../utils/whatsappHelper'
 
 function Navbar() {
