@@ -24,6 +24,7 @@ function AdminEmpreendimentos() {
     googleMapsUrl: '',
     videoYoutube: '',
     imagens: [],
+    videos: [],
     areasLazer: [],
     ativo: true,
   })
@@ -31,6 +32,8 @@ function AdminEmpreendimentos() {
   const [showMoreAreas, setShowMoreAreas] = useState(false)
   const [customArea, setCustomArea] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [uploadingVideo, setUploadingVideo] = useState(false)
+  const [videoUploadProgress, setVideoUploadProgress] = useState(0)
 
   useEffect(() => {
     fetchEmpreendimentos()
@@ -131,6 +134,46 @@ function AdminEmpreendimentos() {
       ...formData,
       imagens: currentImagens.filter((_, i) => i !== index),
     })
+  }
+
+  const handleVideoUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    setUploadingVideo(true)
+    setVideoUploadProgress(0)
+
+    try {
+      const uploadFormData = new FormData()
+      uploadFormData.append('video', file)
+
+      const response = await api.post('/upload/video', uploadFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progressEvent) => {
+          const pct = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+          setVideoUploadProgress(pct)
+        },
+      })
+
+      if (response.data.success && response.data.url) {
+        const currentVideos = Array.isArray(formData.videos) ? formData.videos : []
+        setFormData({ ...formData, videos: [...currentVideos, response.data.url] })
+      } else {
+        throw new Error(response.data.message || 'Erro ao fazer upload do vídeo')
+      }
+    } catch (error) {
+      console.error('Erro ao fazer upload do vídeo:', error)
+      alert(error.response?.data?.message || error.message || 'Erro ao enviar vídeo')
+    } finally {
+      setUploadingVideo(false)
+      setVideoUploadProgress(0)
+      e.target.value = ''
+    }
+  }
+
+  const handleRemoveVideo = (index) => {
+    const currentVideos = Array.isArray(formData.videos) ? formData.videos : []
+    setFormData({ ...formData, videos: currentVideos.filter((_, i) => i !== index) })
   }
 
   const handleMoveImage = (fromIndex, toIndex) => {
@@ -269,6 +312,7 @@ function AdminEmpreendimentos() {
       googleMapsUrl: empreendimento.googleMapsUrl || '',
       videoYoutube: empreendimento.videoYoutube || '',
       imagens: empreendimento.imagens || [],
+      videos: empreendimento.videos || [],
       areasLazer: empreendimento.areasLazer || [],
       ativo: empreendimento.ativo !== undefined ? empreendimento.ativo : true,
     })
@@ -306,6 +350,7 @@ function AdminEmpreendimentos() {
       googleMapsUrl: '',
       videoYoutube: '',
       imagens: [],
+      videos: [],
       areasLazer: [],
       ativo: true,
     })
@@ -327,12 +372,12 @@ function AdminEmpreendimentos() {
               </svg>
               Voltar ao Dashboard
             </Link>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 text-center sm:text-left">Gerenciar Lançamentos</h1>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 text-center sm:text-left">Gerenciar Imóveis</h1>
             <button 
               onClick={() => setShowForm(!showForm)} 
               className="btn-primary text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 whitespace-nowrap"
             >
-              {showForm ? 'Cancelar' : '+ Novo Lançamento'}
+              {showForm ? 'Cancelar' : '+ Novo Imóvel'}
             </button>
           </div>
         </div>
@@ -342,7 +387,7 @@ function AdminEmpreendimentos() {
         {showForm && (
           <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-lg mb-6 sm:mb-8 border border-gray-100">
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">
-              {editingId ? 'Editar Lançamento' : 'Novo Lançamento'}
+              {editingId ? 'Editar Imóvel' : 'Novo Imóvel'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -547,7 +592,63 @@ function AdminEmpreendimentos() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                 />
               </div>
-              <div>
+                      {/* Upload de Vídeos */}
+              <div className="border-t border-gray-200 pt-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Vídeos do Imóvel (Upload direto — MP4, MOV, AVI até 100MB)
+                </label>
+                <input
+                  type="file"
+                  accept="video/mp4,video/mov,video/avi,video/mkv,video/webm,video/wmv"
+                  onChange={handleVideoUpload}
+                  disabled={uploadingVideo}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+                {uploadingVideo && (
+                  <div className="mt-3">
+                    <div className="flex justify-between text-sm text-gray-600 mb-1">
+                      <span>Enviando vídeo...</span>
+                      <span>{videoUploadProgress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div
+                        className="bg-primary-600 h-2.5 rounded-full transition-all duration-300"
+                        style={{ width: `${videoUploadProgress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
+                {Array.isArray(formData.videos) && formData.videos.length > 0 && (
+                  <div className="mt-4 space-y-3">
+                    <p className="text-sm text-gray-600 font-medium">{formData.videos.length} vídeo(s) adicionado(s):</p>
+                    {formData.videos.map((videoUrl, index) => (
+                      <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200">
+                        <video
+                          src={videoUrl}
+                          className="w-40 h-24 object-cover rounded-lg flex-shrink-0 bg-black"
+                          controls
+                          preload="metadata"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs text-gray-500 break-all">{videoUrl.split('/').pop()}</p>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveVideo(index)}
+                            className="mt-2 flex items-center gap-1 text-xs text-red-600 hover:text-red-800 font-medium"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Remover
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+      <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Endereço Completo *
                 </label>
@@ -795,14 +896,14 @@ function AdminEmpreendimentos() {
                                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                Atualizar
+                                Atualizar Imóvel
                               </>
                             ) : (
                               <>
                                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
-                                Criar Lançamento
+                                Cadastrar Imóvel
                               </>
                             )}
                           </button>
@@ -824,7 +925,7 @@ function AdminEmpreendimentos() {
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-            <p className="ml-4 text-gray-600">Carregando lançamentos...</p>
+            <p className="ml-4 text-gray-600">Carregando imóveis...</p>
           </div>
         ) : (
           <>

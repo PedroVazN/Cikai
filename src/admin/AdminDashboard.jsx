@@ -70,7 +70,7 @@ function AdminDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-700">Total de Lançamentos</h3>
+                <h3 className="text-lg font-semibold text-gray-700">Total de Imóveis</h3>
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
                   <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -78,7 +78,7 @@ function AdminDashboard() {
                 </div>
               </div>
               <p className="text-5xl font-light text-primary-600 mb-2">{stats.totalEmpreendimentos}</p>
-              <p className="text-sm text-gray-500">Empreendimentos cadastrados</p>
+              <p className="text-sm text-gray-500">Imóveis cadastrados</p>
             </div>
             <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-200">
               <div className="flex items-center justify-between mb-4">
@@ -110,8 +110,8 @@ function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-2 text-gray-900 group-hover:text-primary-600 transition-colors">Gerenciar Lançamentos</h3>
-            <p className="text-gray-600 leading-relaxed">Criar, editar e gerenciar empreendimentos imobiliários</p>
+            <h3 className="text-2xl font-bold mb-2 text-gray-900 group-hover:text-primary-600 transition-colors">Gerenciar Imóveis</h3>
+            <p className="text-gray-600 leading-relaxed">Cadastrar, editar e gerenciar imóveis para revenda</p>
           </Link>
           <Link
             to="/admin/leads"

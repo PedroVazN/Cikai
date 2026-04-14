@@ -80,7 +80,6 @@ const uploadMultiple = multer({
   storage,
   limits: { 
     fileSize: 5 * 1024 * 1024, // 5MB por arquivo
-    // Sem limite de quantidade de arquivos
   },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|webp|gif/
@@ -91,6 +90,23 @@ const uploadMultiple = multer({
       return cb(null, true)
     } else {
       cb(new Error('Apenas imagens são permitidas (jpeg, jpg, png, webp, gif)'))
+    }
+  },
+})
+
+// Configurar upload de vídeo (100MB, memory storage sempre)
+const videoStorage = multer.memoryStorage()
+const uploadVideo = multer({
+  storage: videoStorage,
+  limits: { fileSize: 100 * 1024 * 1024 }, // 100MB
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /mp4|mov|avi|mkv|webm|wmv/
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase())
+    const mimetype = /video\//.test(file.mimetype)
+    if (mimetype && extname) {
+      return cb(null, true)
+    } else {
+      cb(new Error('Apenas vídeos são permitidos (mp4, mov, avi, mkv, webm, wmv)'))
     }
   },
 })
@@ -331,6 +347,47 @@ router.post('/multiple', authenticateToken, uploadMultiple.array('images'), hand
       message: error.message || 'Erro ao processar upload de imagens',
       error: process.env.NODE_ENV === 'development' ? error.stack : undefined
     })
+  }
+})
+
+// POST /api/upload/video - Upload de vídeo único (admin)
+router.post('/video', authenticateToken, uploadVideo.single('video'), handleMulterError, async (req, res) => {
+  try {
+    if (!useCloudinary) {
+      return res.status(500).json({
+        success: false,
+        message: 'Cloudinary não configurado. Configure as variáveis CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY e CLOUDINARY_API_SECRET.'
+      })
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'Nenhum vídeo enviado' })
+    }
+
+    const uploadOptions = {
+      folder: 'celia-ikai/videos',
+      resource_type: 'video',
+      chunk_size: 6000000, // 6MB chunks para vídeos grandes
+    }
+
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(uploadOptions, (error, result) => {
+        if (error) reject(error)
+        else resolve(result)
+      })
+      uploadStream.end(req.file.buffer)
+    })
+
+    res.json({
+      success: true,
+      url: result.secure_url,
+      publicId: result.public_id,
+      duration: result.duration,
+      message: 'Vídeo enviado com sucesso'
+    })
+  } catch (error) {
+    console.error('Erro no upload de vídeo:', error)
+    res.status(500).json({ success: false, message: error.message || 'Erro ao enviar vídeo' })
   }
 })
 

@@ -433,10 +433,10 @@ function ComoComprar() {
                 Falar no WhatsApp
               </a>
               <Link
-                to="/lancamentos"
+                to="/"
                 className="px-8 py-4 bg-white/20 backdrop-blur-md text-white border-2 border-white rounded-xl font-bold text-lg hover:bg-white/30 transition-all duration-300"
               >
-                Ver Lançamentos
+                Ver Imóveis
               </Link>
             </div>
           </div>

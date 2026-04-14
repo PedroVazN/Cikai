@@ -2,8 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
-import Lancamentos from './pages/Lancamentos'
-import LancamentoDetalhe from './pages/LancamentoDetalhe'
+import ImovelDetalhe from './pages/ImovelDetalhe'
 import Contato from './pages/Contato'
 import AgendarVisita from './pages/AgendarVisita'
 import ComoComprar from './pages/ComoComprar'
@@ -21,8 +20,7 @@ function App() {
         {/* Rotas Públicas */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="lancamentos" element={<Lancamentos />} />
-          <Route path="lancamentos/:id" element={<LancamentoDetalhe />} />
+          <Route path="imoveis/:id" element={<ImovelDetalhe />} />
           <Route path="contato" element={<Contato />} />
           <Route path="como-comprar" element={<ComoComprar />} />
           <Route path="agendar-visita/:id" element={<AgendarVisita />} />

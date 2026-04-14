@@ -73,10 +73,10 @@ function AgendarVisita() {
             Recebemos seu interesse. Entraremos em contato em breve com mais informações.
           </p>
           <Link 
-            to="/lancamentos" 
+            to="/" 
             className="inline-block bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
           >
-            Ver Outros Lançamentos
+            Ver Outros Imóveis
           </Link>
         </div>
       </div>

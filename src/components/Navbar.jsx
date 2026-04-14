@@ -20,17 +20,17 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100' 
+      scrolled
+        ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100'
         : 'bg-white/80 backdrop-blur-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 lg:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
-            <img 
-              src={logoImage} 
-              alt="C.Ikai - Logo" 
+            <img
+              src={logoImage}
+              alt="C.Ikai - Logo"
               className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
@@ -47,16 +47,12 @@ function Navbar() {
             >
               Home
             </Link>
-            <Link
-              to="/lancamentos"
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                isActive('/lancamentos')
-                  ? 'text-primary-700 bg-primary-50'
-                  : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
-              }`}
+            <a
+              href={location.pathname === '/' ? '#imoveis' : '/#imoveis'}
+              className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-primary-50"
             >
-              Lançamentos
-            </Link>
+              Imóveis
+            </a>
             <Link
               to="/como-comprar"
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
@@ -66,6 +62,16 @@ function Navbar() {
               }`}
             >
               Como Comprar
+            </Link>
+            <Link
+              to="/contato"
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                isActive('/contato')
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
+              }`}
+            >
+              Contato
             </Link>
             <a
               href={generateWhatsAppLink(generateContatoMessage())}
@@ -118,17 +124,13 @@ function Navbar() {
           >
             Home
           </Link>
-          <Link
-            to="/lancamentos"
-            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
-              isActive('/lancamentos')
-                ? 'text-primary-700 bg-primary-50'
-                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
-            }`}
+          <a
+            href={location.pathname === '/' ? '#imoveis' : '/#imoveis'}
+            className="block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-gray-50"
             onClick={() => setIsOpen(false)}
           >
-            Lançamentos
-          </Link>
+            Imóveis
+          </a>
           <Link
             to="/como-comprar"
             className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
@@ -139,6 +141,17 @@ function Navbar() {
             onClick={() => setIsOpen(false)}
           >
             Como Comprar
+          </Link>
+          <Link
+            to="/contato"
+            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+              isActive('/contato')
+                ? 'text-primary-700 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            Contato
           </Link>
           <a
             href={generateWhatsAppLink(generateContatoMessage())}
