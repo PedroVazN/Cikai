@@ -4,7 +4,7 @@ import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 import { generateWhatsAppLink, generateContatoMessage, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
 import bannerImage from '../imgs/banner2.jpg'
-import celiaPhoto from '../imgs/celia.png'
+import celiaPhoto from '../imgs/Celia.png'
 
 function Home() {
   const [imoveis, setImoveis] = useState([])
