@@ -4,8 +4,12 @@ import { generateWhatsAppLink, generateContatoMessage, getWhatsAppNumber } from 
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="relative overflow-hidden bg-gray-950 text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-primary-700/20 blur-3xl"></div>
+        <div className="absolute -bottom-24 -right-20 h-72 w-72 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Sobre */}
           <div className="space-y-4">

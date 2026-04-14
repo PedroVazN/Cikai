@@ -21,8 +21,8 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled
-        ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100'
-        : 'bg-white/80 backdrop-blur-md'
+        ? 'bg-white/80 backdrop-blur-md border-b border-white/70 shadow-[0_8px_22px_rgba(15,23,42,0.08)]'
+        : 'bg-white shadow-[0_6px_20px_rgba(15,23,42,0.06)] border-b border-gray-100'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 lg:h-24">
@@ -36,7 +36,7 @@ function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2 p-1.5 rounded-2xl border border-white/70 bg-white/55 backdrop-blur-md shadow-sm">
             <Link
               to="/"
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
@@ -77,7 +77,7 @@ function Navbar() {
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-6 py-2.5 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
+              className="ml-2 px-6 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
             >
               WhatsApp
             </a>
