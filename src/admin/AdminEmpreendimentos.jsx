@@ -144,26 +144,47 @@ function AdminEmpreendimentos() {
     setVideoUploadProgress(0)
 
     try {
+      // Busca assinatura do backend (sem enviar o arquivo, evita limite 4.5MB do Vercel)
+      const sigResponse = await api.get('/upload/video-signature')
+      const { signature, timestamp, apiKey, cloudName, folder } = sigResponse.data
+
+      // Upload direto do browser para o Cloudinary
       const uploadFormData = new FormData()
-      uploadFormData.append('video', file)
+      uploadFormData.append('file', file)
+      uploadFormData.append('api_key', apiKey)
+      uploadFormData.append('timestamp', timestamp)
+      uploadFormData.append('signature', signature)
+      uploadFormData.append('folder', folder)
 
-      const response = await api.post('/upload/video', uploadFormData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (progressEvent) => {
-          const pct = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-          setVideoUploadProgress(pct)
-        },
+      await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`)
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const pct = Math.round((event.loaded * 100) / event.total)
+            setVideoUploadProgress(pct)
+          }
+        }
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const result = JSON.parse(xhr.responseText)
+            const currentVideos = Array.isArray(formData.videos) ? formData.videos : []
+            setFormData(prev => ({ ...prev, videos: [...(Array.isArray(prev.videos) ? prev.videos : []), result.secure_url] }))
+            resolve(result)
+          } else {
+            const err = JSON.parse(xhr.responseText)
+            reject(new Error(err.error?.message || 'Erro no Cloudinary'))
+          }
+        }
+
+        xhr.onerror = () => reject(new Error('Erro de rede ao enviar vídeo'))
+        xhr.send(uploadFormData)
       })
-
-      if (response.data.success && response.data.url) {
-        const currentVideos = Array.isArray(formData.videos) ? formData.videos : []
-        setFormData({ ...formData, videos: [...currentVideos, response.data.url] })
-      } else {
-        throw new Error(response.data.message || 'Erro ao fazer upload do vídeo')
-      }
     } catch (error) {
       console.error('Erro ao fazer upload do vídeo:', error)
-      alert(error.response?.data?.message || error.message || 'Erro ao enviar vídeo')
+      alert(error.message || 'Erro ao enviar vídeo. Verifique se o Cloudinary está configurado.')
     } finally {
       setUploadingVideo(false)
       setVideoUploadProgress(0)

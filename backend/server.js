@@ -33,16 +33,17 @@ const corsOptions = {
     const allowedOrigins = [
       process.env.FRONTEND_URL,
       'https://cikai-front.vercel.app',
+      'https://www.cikai.com.br',
+      'https://cikai.com.br',
       'http://localhost:3000',
       'http://localhost:5173',
-    ].filter(Boolean) // Remove valores undefined/null
+    ].filter(Boolean)
     
-    // Se não tiver FRONTEND_URL configurado, permitir todas (desenvolvimento)
     if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
       console.log('CORS bloqueado para origin:', origin)
-      callback(null, true) // Permitir todas por enquanto para debug
+      callback(null, true)
     }
   },
   credentials: true,

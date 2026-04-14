@@ -350,6 +350,30 @@ router.post('/multiple', authenticateToken, uploadMultiple.array('images'), hand
   }
 })
 
+// GET /api/upload/video-signature - Gera assinatura para upload direto ao Cloudinary (sem passar pelo servidor)
+router.get('/video-signature', authenticateToken, (req, res) => {
+  if (!useCloudinary) {
+    return res.status(500).json({ success: false, message: 'Cloudinary não configurado.' })
+  }
+
+  const timestamp = Math.round(Date.now() / 1000)
+  const folder = 'celia-ikai/videos'
+
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder },
+    process.env.CLOUDINARY_API_SECRET
+  )
+
+  res.json({
+    success: true,
+    signature,
+    timestamp,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    folder,
+  })
+})
+
 // POST /api/upload/video - Upload de vídeo único (admin)
 router.post('/video', authenticateToken, uploadVideo.single('video'), handleMulterError, async (req, res) => {
   try {
