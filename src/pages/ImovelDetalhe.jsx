@@ -5,7 +5,7 @@ import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 import { generateGoogleMapsEmbedUrl, generateGoogleMapsUrl } from '../utils/mapHelper'
 import { generateWhatsAppLink, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
 import { getYouTubeEmbedUrl } from '../utils/youtubeHelper'
-import { extractImovelIdFromParam, getImovelSlugPath } from '../utils/slugHelper'
+import { extractImovelIdFromParam, getImovelSlugPath, isMongoId, slugify } from '../utils/slugHelper'
 import ImageGallery from '../components/ImageGallery'
 
 function ImovelDetalhe() {
@@ -19,25 +19,41 @@ function ImovelDetalhe() {
   }, [slugOrId])
 
   const fetchImovel = async () => {
-    const imovelId = extractImovelIdFromParam(slugOrId)
-
-    if (!imovelId) {
-      setLoading(false)
-      setImovel(null)
-      return
-    }
-
     try {
-      const response = await api.get(`/empreendimentos/${imovelId}`)
-      const data = response.data
-      setImovel(data)
+      if (isMongoId(slugOrId)) {
+        const response = await api.get(`/empreendimentos/${slugOrId}`)
+        const data = response.data
+        setImovel(data)
+        navigate(getImovelSlugPath(data), { replace: true })
+        return
+      }
 
-      const canonicalPath = getImovelSlugPath(data)
-      if (slugOrId !== canonicalPath.replace('/imoveis/', '')) {
-        navigate(canonicalPath, { replace: true })
+      const imovelId = extractImovelIdFromParam(slugOrId)
+      if (imovelId) {
+        const response = await api.get(`/empreendimentos/${imovelId}`)
+        const data = response.data
+        setImovel(data)
+        navigate(getImovelSlugPath(data), { replace: true })
+        return
+      }
+
+      const response = await api.get('/empreendimentos')
+      const imovelEncontrado = response.data.find((item) => slugify(item?.nome) === slugOrId)
+
+      if (!imovelEncontrado) {
+        setImovel(null)
+        return
+      }
+
+      setImovel(imovelEncontrado)
+
+      const canonicalSlug = getImovelSlugPath(imovelEncontrado).replace('/imoveis/', '')
+      if (slugOrId !== canonicalSlug) {
+        navigate(getImovelSlugPath(imovelEncontrado), { replace: true })
       }
     } catch (error) {
       console.error('Erro ao carregar imóvel:', error)
+      setImovel(null)
     } finally {
       setLoading(false)
     }

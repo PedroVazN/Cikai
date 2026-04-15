@@ -11,10 +11,11 @@ export const slugify = (text = '') => {
 }
 
 export const getImovelSlugPath = (imovel) => {
-  const id = imovel?._id || ''
   const slug = slugify(imovel?.nome || 'imovel')
-  return `/imoveis/${slug}-${id}`
+  return `/imoveis/${slug}`
 }
+
+export const isMongoId = (value = '') => /^[a-f0-9]{24}$/i.test(value.trim())
 
 export const extractImovelIdFromParam = (value = '') => {
   const raw = value.trim()
