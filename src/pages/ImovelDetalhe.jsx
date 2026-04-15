@@ -103,6 +103,17 @@ function ImovelDetalhe() {
               <span className="text-gray-800 font-semibold">{imovel.nome}</span>
             </nav>
 
+            {/* Informações (Mobile) */}
+            <div className="bg-white rounded-2xl shadow-elegant p-6 border-elegant lg:hidden">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">Informações</h2>
+              <div className="p-5 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100 shadow-sm">
+                <p className="text-xs text-gray-600 mb-2 uppercase tracking-wider font-semibold">Preço</p>
+                <p className="text-3xl font-bold text-gray-800 mb-1">Sob Consulta</p>
+                <p className="text-sm text-primary-700 font-semibold mt-1">Preços negociáveis</p>
+                <p className="text-xs text-gray-500 font-medium mt-1">Entre em contato para mais informações</p>
+              </div>
+            </div>
+
             {/* Galeria de Imagens */}
             {imovel.imagens && imovel.imagens.length > 0 && (
               <ImageGallery
@@ -304,8 +315,8 @@ function ImovelDetalhe() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-elegant-lg p-8 sticky top-28 border-elegant">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Informações</h2>
-              <div className="mb-8 p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100 shadow-sm">
+              <h2 className="hidden lg:block text-2xl font-bold mb-6 text-gray-800">Informações</h2>
+              <div className="hidden lg:block mb-8 p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100 shadow-sm">
                 <p className="text-xs text-gray-600 mb-2 uppercase tracking-wider font-semibold">Preço</p>
                 <p className="text-3xl font-bold text-gray-800 mb-1">
                   Sob Consulta
