@@ -39,33 +39,33 @@ function Navbar() {
           <div className="hidden md:flex items-center gap-2 p-1.5 rounded-2xl border border-white/70 bg-white/55 backdrop-blur-md shadow-sm">
             <Link
               to="/"
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg text-xs lg:text-sm font-semibold transition-all duration-300 ${
                 isActive('/')
                   ? 'text-primary-700 bg-primary-50'
                   : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
               }`}
             >
-              Home
+              Início
             </Link>
             <a
               href={location.pathname === '/' ? '#imoveis' : '/#imoveis'}
-              className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-primary-50"
+              className="px-5 py-2.5 rounded-lg text-xs lg:text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-primary-50"
             >
               Imóveis
             </a>
             <Link
               to="/como-comprar"
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg text-xs lg:text-sm font-semibold transition-all duration-300 ${
                 isActive('/como-comprar')
                   ? 'text-primary-700 bg-primary-50'
                   : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
               }`}
             >
-              Como Comprar
+              Comprar
             </Link>
             <Link
               to="/contato"
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg text-xs lg:text-sm font-semibold transition-all duration-300 ${
                 isActive('/contato')
                   ? 'text-primary-700 bg-primary-50'
                   : 'text-gray-700 hover:text-primary-700 hover:bg-primary-50'
@@ -77,7 +77,7 @@ function Navbar() {
               href={generateWhatsAppLink(generateContatoMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-6 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
+              className="ml-2 px-6 py-2.5 bg-primary-600 text-white rounded-xl text-xs lg:text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:scale-105"
             >
               WhatsApp
             </a>
@@ -115,36 +115,36 @@ function Navbar() {
         <div className="px-4 pb-4 space-y-2 bg-white border-t border-gray-100">
           <Link
             to="/"
-            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+            className={`block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
               isActive('/')
                 ? 'text-gray-800 bg-gray-100'
                 : 'text-gray-700 hover:text-gray-800 hover:bg-gray-50'
             }`}
             onClick={() => setIsOpen(false)}
           >
-            Home
+              Início
           </Link>
           <a
             href={location.pathname === '/' ? '#imoveis' : '/#imoveis'}
-            className="block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-gray-50"
+            className="block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-primary-700 hover:bg-gray-50"
             onClick={() => setIsOpen(false)}
           >
             Imóveis
           </a>
           <Link
             to="/como-comprar"
-            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+            className={`block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
               isActive('/como-comprar')
                 ? 'text-primary-700 bg-primary-50'
                 : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
             }`}
             onClick={() => setIsOpen(false)}
           >
-            Como Comprar
+            Comprar
           </Link>
           <Link
             to="/contato"
-            className={`block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
+            className={`block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
               isActive('/contato')
                 ? 'text-primary-700 bg-primary-50'
                 : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50'
@@ -157,7 +157,7 @@ function Navbar() {
             href={generateWhatsAppLink(generateContatoMessage())}
             target="_blank"
             rel="noopener noreferrer"
-            className="block px-4 py-3 rounded-lg text-base font-semibold bg-primary-600 text-white hover:bg-primary-700 transition-all duration-300 shadow-lg"
+            className="block px-4 py-3 rounded-lg text-sm font-semibold bg-primary-600 text-white hover:bg-primary-700 transition-all duration-300 shadow-lg"
             onClick={() => setIsOpen(false)}
           >
             WhatsApp

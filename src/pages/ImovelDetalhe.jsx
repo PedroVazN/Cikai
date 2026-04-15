@@ -155,7 +155,7 @@ function ImovelDetalhe() {
             )}
 
             {/* Descrição */}
-            <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
+            <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant lg:hidden">
               <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                 Sobre o Imóvel
               </h2>
@@ -235,7 +235,7 @@ function ImovelDetalhe() {
 
             {/* Áreas de Lazer */}
             {imovel.areasLazer && imovel.areasLazer.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant">
+              <div className="bg-white rounded-2xl shadow-elegant p-10 border-elegant lg:hidden">
                 <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">
                   Áreas de Lazer
                 </h2>
@@ -347,6 +347,85 @@ function ImovelDetalhe() {
                   <span className="text-xs text-primary-600 font-semibold">CRECI SP 282.069</span>
                 </p>
               </div>
+
+              {/* Resumo do imóvel - Desktop */}
+              <div className="hidden lg:block mt-8 pt-6 border-t border-gray-200/60">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Características do Imóvel</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {imovel.metragens && imovel.metragens.length > 0 ? (
+                    <div className="col-span-2 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Metragens</p>
+                      <div className="flex flex-wrap gap-2">
+                        {imovel.metragens.map((metragem, idx) => (
+                          <span key={idx} className="px-2.5 py-1 rounded-md bg-white border border-gray-200 text-sm font-semibold text-gray-800">
+                            {metragem}m²
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {imovel.metragemMin && (
+                        <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                          <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Área Mín.</p>
+                          <p className="text-xl font-bold text-gray-800">{imovel.metragemMin}m²</p>
+                        </div>
+                      )}
+                      {imovel.metragemMax && (
+                        <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                          <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Área Máx.</p>
+                          <p className="text-xl font-bold text-gray-800">{imovel.metragemMax}m²</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {imovel.dormitorios && (
+                    <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Dormitórios</p>
+                      <p className="text-xl font-bold text-gray-800">{imovel.dormitorios}</p>
+                    </div>
+                  )}
+                  <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                    <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Suítes</p>
+                    <p className="text-xl font-bold text-gray-800">{imovel.suites && imovel.suites > 0 ? imovel.suites : '0'}</p>
+                  </div>
+                  {imovel.vagasCarro && (
+                    <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Vagas Carro</p>
+                      <p className="text-xl font-bold text-gray-800">{imovel.vagasCarro}</p>
+                    </div>
+                  )}
+                  {imovel.vagasMoto && (
+                    <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Vagas Moto</p>
+                      <p className="text-xl font-bold text-gray-800">{imovel.vagasMoto}</p>
+                    </div>
+                  )}
+                  {imovel.vagas && !imovel.vagasCarro && (
+                    <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Vagas</p>
+                      <p className="text-xl font-bold text-gray-800">{imovel.vagas}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {imovel.areasLazer && imovel.areasLazer.length > 0 && (
+                <div className="hidden lg:block mt-6">
+                  <h3 className="text-lg font-bold text-gray-800 mb-4">Áreas de Lazer</h3>
+                  <div className="space-y-2.5">
+                    {imovel.areasLazer.map((area, index) => (
+                      <div key={index} className="flex items-center gap-2.5 p-3 rounded-lg bg-gray-50 border border-gray-200">
+                        <svg className="w-4 h-4 text-primary-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm text-gray-700 font-medium">{area}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
