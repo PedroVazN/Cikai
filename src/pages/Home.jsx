@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 import { generateWhatsAppLink, generateContatoMessage, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
+import { getImovelSlugPath } from '../utils/slugHelper'
 import predioImage from '../imgs/imagemprediodireita.png'
 import celiaPhoto from '../imgs/Celia.png'
 
@@ -200,7 +201,7 @@ function Home() {
                   key={imovel._id}
                   className="group bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-gray-100"
                 >
-                  <Link to={`/imoveis/${imovel._id}`}>
+                  <Link to={getImovelSlugPath(imovel)}>
                     <div className="relative h-64 overflow-hidden">
                       {imovel.imagens && imovel.imagens.length > 0 ? (
                         <>
@@ -273,7 +274,7 @@ function Home() {
                         <p className="text-xs text-primary-600 font-medium">Preços negociáveis</p>
                       </div>
                       <Link
-                        to={`/imoveis/${imovel._id}`}
+                        to={getImovelSlugPath(imovel)}
                         className="flex items-center justify-center w-10 h-10 bg-primary-100 rounded-xl hover:bg-primary-200 transition-colors group-hover:scale-110 duration-300"
                       >
                         <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -295,7 +296,7 @@ function Home() {
                         Tenho Interesse
                       </a>
                       <Link
-                        to={`/imoveis/${imovel._id}`}
+                        to={getImovelSlugPath(imovel)}
                         className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white border-2 border-primary-200 text-primary-700 rounded-xl font-semibold text-sm hover:border-primary-400 hover:bg-primary-50 transition-all duration-300"
                       >
                         Ver Detalhes do Imóvel

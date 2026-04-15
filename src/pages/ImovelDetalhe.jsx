@@ -1,25 +1,41 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import api from '../services/api'
 import { normalizeImageUrl, handleImageError } from '../utils/imageHelper'
 import { generateGoogleMapsEmbedUrl, generateGoogleMapsUrl } from '../utils/mapHelper'
 import { generateWhatsAppLink, generateEmpreendimentoMessage } from '../utils/whatsappHelper'
 import { getYouTubeEmbedUrl } from '../utils/youtubeHelper'
+import { extractImovelIdFromParam, getImovelSlugPath } from '../utils/slugHelper'
 import ImageGallery from '../components/ImageGallery'
 
 function ImovelDetalhe() {
-  const { id } = useParams()
+  const { id: slugOrId } = useParams()
+  const navigate = useNavigate()
   const [imovel, setImovel] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchImovel()
-  }, [id])
+  }, [slugOrId])
 
   const fetchImovel = async () => {
+    const imovelId = extractImovelIdFromParam(slugOrId)
+
+    if (!imovelId) {
+      setLoading(false)
+      setImovel(null)
+      return
+    }
+
     try {
-      const response = await api.get(`/empreendimentos/${id}`)
-      setImovel(response.data)
+      const response = await api.get(`/empreendimentos/${imovelId}`)
+      const data = response.data
+      setImovel(data)
+
+      const canonicalPath = getImovelSlugPath(data)
+      if (slugOrId !== canonicalPath.replace('/imoveis/', '')) {
+        navigate(canonicalPath, { replace: true })
+      }
     } catch (error) {
       console.error('Erro ao carregar imóvel:', error)
     } finally {
